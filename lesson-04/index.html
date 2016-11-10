@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex, nofollow">
+
+	<title>Janova školka HTML - Lekce 4</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+</head>
+<!--
+	Nad těmito řádky není nic, co by mělo na tvůj úkol vliv, pouze to pomáhá udělat stránku krásnější.
+	Věnuj se tedy především kódu níže.
+-->
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Lekce 4</h1>
+			<p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem "Zvolili jste si číslo: X" kde místo čísla X bude to napsané do textového pole.<br>
+				Ovšem, pokud uživatel nic nevyplnil, tak se musí <strong>místo toho</strong> zobrazit chybová hláška: <em>CHYBA: Je nezbytné nejprve vyplnit text</em>.<br>
+				A pokud zadal něco jiného, než číslo, musí se zobrazit chyba: <em>CHYBA: zadali jste něco jiného, než číslo</em></p>
+			<form>
+				<div class="form-group">
+			 		<label for="name">Vámi zvolneé číslo</label>
+					<input type="text" class="form-control" id="number">
+			  	</div>
+				<button class="btn btn-primary" onclick="if ((document.getElementById('number').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')} else alert(document.getElementById('number').value)">Stiskni mě</button>
+			</form>
+			<p><small>Nápověda: konstrukce, které hledáš, jsou: <code>if()</code> a <code>==</code>.</small></p>
+		</div>
+
+	</div>
+</body>
+</html>
