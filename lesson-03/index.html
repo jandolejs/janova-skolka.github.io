@@ -25,7 +25,7 @@
 			 		<label for="name">Text k zobrazení</label>
 					<input type="text" class="form-control" id="text">
 			  	</div>
-				<button class="btn btn-primary" onclick="alert(document.getElementById('text').value)">Stiskni mě</button>
+				<button class="btn btn-primary" onclick="if ((document.getElementById('text').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')} else alert(document.getElementById('text').value)">Stiskni mě</button>
 			</form>
 			<p><small>Nápověda: konstrukce, které hledáš, jsou: <code>if()</code> a <code>==</code>.</small></p>
 		</div>
