@@ -20,13 +20,11 @@
 		<div class="jumbotron">
 			<h1>Lekce 3</h1>
 			<p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem, který je zadán do textového pole. Ovšem, pokud uživatel nic nevyplnil, tak se musí <strong>místo toho</strong> zobrazit chybová hláška: <em>CHYBA: Je nezbytné nejprve vyplnit text</em></p>
-			<form>
-				<div class="form-group">
-			 		<label for="name">Text k zobrazení</label>
-					<input type="text" class="form-control" id="text">
-			  	</div>
-				<button class="btn btn-primary" onclick="if ((document.getElementById('text').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')} else alert(document.getElementById('text').value)">Stiskni mě</button>
-			</form>
+			<div class="form-group">
+				<label for="name">Text k zobrazení</label>
+				<input type="text" class="form-control" id="text">
+			</div>
+			<button class="btn btn-primary" onclick="if ((document.getElementById('text').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')} else alert(document.getElementById('text').value)">Stiskni mě</button>
 			<p><small>Nápověda: konstrukce, které hledáš, jsou: <code>if()</code> a <code>==</code>.</small></p>
 		</div>
 

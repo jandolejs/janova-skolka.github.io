@@ -20,13 +20,11 @@
 		<div class="jumbotron">
 			<h1>Lekce 2</h1>
 			<p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem, který je zadán do textového pole.</p>
-			<form>
-				<div class="form-group">
-			 		<label for="name">Text k zobrazení</label>
-					<input type="text" class="form-control" id="text">
-			  	</div>
-				<button class="btn btn-primary" onclick="alert(document.getElementById('text').value)">Stiskni mě</button>
-			</form>
+			<div class="form-group">
+				<label for="name">Text k zobrazení</label>
+				<input type="text" class="form-control" id="text">
+			</div>
+			<button class="btn btn-primary" onclick="alert(document.getElementById('text').value)">Stiskni mě</button>
 			<p><small>Nápověda: funkce, kterou hledáš, se jmenuje <code>getElementById()</code>.</small></p>
 		</div>
 

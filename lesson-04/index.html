@@ -22,16 +22,14 @@
 			<p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem "Zvolili jste si číslo: X" kde místo čísla X bude to napsané do textového pole.<br>
 				Ovšem, pokud uživatel nic nevyplnil, tak se musí <strong>místo toho</strong> zobrazit chybová hláška: <em>CHYBA: Je nezbytné nejprve vyplnit text</em>.<br>
 				A pokud zadal něco jiného, než číslo, musí se zobrazit chyba: <em>CHYBA: zadali jste něco jiného, než číslo</em></p>
-			<form>
-				<div class="form-group">
-			 		<label for="name">Vámi zvolené číslo</label>
-					<input type="text" class="form-control" id="number">
-			  	</div>
-				<button class="btn btn-primary" onclick="
-				if ((document.getElementById('number').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')}
-				else if ((document.getElementById('number').value.match(/^\d+$/))) {alert('Zvolili jste si číslo: ' + document.getElementById('number').value)}
-				else alert('CHYBA: zadali jste něco jiného, než číslo')">Stiskni mě</button>
-			</form>
+			<div class="form-group">
+				<label for="name">Vámi zvolené číslo</label>
+				<input type="text" class="form-control" id="number">
+			</div>
+			<button class="btn btn-primary" onclick="
+			if ((document.getElementById('number').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')}
+			else if ((document.getElementById('number').value.match(/^\d+$/))) {alert('Zvolili jste si číslo: ' + document.getElementById('number').value)}
+			else alert('CHYBA: zadali jste něco jiného, než číslo')">Stiskni mě</button>
 		</div>
 
 	</div>
