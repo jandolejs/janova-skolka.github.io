@@ -14,5 +14,5 @@ function hlaska() {
 }
 
 function spustit() {
-	document.getElementById("main_button").onclick=hlaska
+	document.getElementById("main_button").onclick = hlaska
 }
