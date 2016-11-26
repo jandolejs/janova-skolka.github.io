@@ -4,5 +4,5 @@ function hlaska() {
 }
 
 function spustit() {
-document.getElementById("main_button").a(hlaska)
+document.getElementById("main_button").a=hlaska
 }
