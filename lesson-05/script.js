@@ -15,5 +15,6 @@ function hlaska()
 
 function spustit() 
 {
+	document.getElementById("main_button").disabled = true;
 	document.getElementById("main_button").onclick = hlaska;
 }
