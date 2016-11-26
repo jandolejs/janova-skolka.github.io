@@ -1,1 +1,4 @@
-document.getElementById('main_button').onClick(alert('1'))
+function hlaska() {
+	alert('1')
+}
+getElementById('main_button').onclick(hlaska())
