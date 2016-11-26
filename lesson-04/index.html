@@ -28,8 +28,8 @@
 					<input type="text" class="form-control" id="number">
 			  	</div>
 				<button class="btn btn-primary" onclick="
-				if ((document.getElementById('number').value) == '^\d$') {alert('CHYBA: Zadali jste něco jiného než číslo')}
-				else if ((document.getElementById('number').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')} 
+				if ((document.getElementById('number').value) == '') {alert('CHYBA: Je nezbytné nejprve vyplnit text')}
+				else if ((document.getElementById('number').value.match('^\d$'))) {alert('CHYBA: zadali jste něco jiného, než číslo')}
 				else alert(document.getElementById('number').value)">Stiskni mě</button>
 			</form>
 		</div>
