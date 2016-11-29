@@ -17,6 +17,7 @@ function spustit()
 {
 	document.getElementById("main_button").setAttribute("disabled", "disabled");
 	document.getElementById("number").onkeyup = kontrola;
+	document.getElementById("main_button").onclick = hlaska;
 }
 
 function kontrola()
