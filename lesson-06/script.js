@@ -15,7 +15,23 @@ function hlaska()
 
 function spustit() 
 {
-	do document.getElementById("main_button").setAttribute("disabled", "disabled")
-	while document.getElementById("number").value.match(/^\d+$/);
+	do {
+		document.getElementById("main_button").setAttribute("disabled", "disabled");
+	}
+	while (document.getElementById("number").value.match(/^\d+$/));
+
 	document.getElementById("main_button").onclick = hlaska;
+	document.getElementById("number").onkeyup = kontrola;
+}
+
+function kontrola()
+{
+	if (document.getElementById("number").value.match(/^\d+$/))
+	{
+		document.getElementById("main_button").removeAttribute("disabled");
+	}
+	else 
+	{
+		document.getElementById("main_button").setAttribute("disabled", "disabled");
+	}
 }
