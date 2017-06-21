@@ -1,10 +1,10 @@
 function hlaska() {
-	if ((document.getElementById('number').value) == '') {
-		alert('CHYBA: Je nezbytné nejprve vyplnit text');
-	} else if ((document.getElementById('number').value.match(/^\d+$/))) {
-		alert('Zvolili jste si číslo: ' + document.getElementById('number').value);
+	if ((document.getElementById("number").value) == "") {
+		alert("CHYBA: Je nezbytné nejprve vyplnit text");
+	} else if ((document.getElementById("number").value.match(/^\d+$/))) {
+		alert("Zvolili jste si číslo: " + document.getElementById("number").value);
 	} else {
-		alert('CHYBA: zadali jste něco jiného, než číslo');
+		alert("CHYBA: zadali jste něco jiného, než číslo");
 	}
 }
 
