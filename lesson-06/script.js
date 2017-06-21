@@ -17,5 +17,7 @@ function spustit() {
 function kontrola() {
 	if (document.getElementById("number").value.match(/^\d+$/)) {
 		document.getElementById("main_button").removeAttribute("disabled");
-	} else document.getElementById("main_button").setAttribute("disabled", "disabled");
+	} else {
+		document.getElementById("main_button").setAttribute("disabled", "disabled");
+	}
 }
