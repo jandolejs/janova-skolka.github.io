@@ -1,25 +1,18 @@
-var regexp = /^\d+[,.]?\d*$/;
-
-function hlaska() {
-	if ((document.getElementById("number").value) == "") {
-		alert("CHYBA: Je nezbytné nejprve vyplnit text");
-	} else if ((document.getElementById("number").value.match(regexp))) {
-		alert("Zvolili jste si číslo: " + document.getElementById("number").value);
-	} else {
-		alert("CHYBA: zadali jste něco jiného, než číslo");
-	}
-}
-
 function spustit() {
-	document.getElementById("main_button").setAttribute("disabled", "disabled");
-	document.getElementById("number").oninput = kontrola;
 	document.getElementById("main_button").onclick = hlaska;
+	document.getElementById("name").oninput = kontrola;
+	document.getElementById("birth_year").oninput = kontrola;
+	document.getElementById("height").oninput = kontrola;
+
 }
 
-function kontrola() {
-	if (document.getElementById("number").value.match(regexp)) {
-		document.getElementById("main_button").removeAttribute("disabled");
-	} else {
-		document.getElementById("main_button").setAttribute("disabled", "disabled");
-	}
+function hlaska(){
+	var jmeno = document.getElementById("name").value;
+	var datum = document.getElementById("birth_year").value;
+	var vyska = document.getElementById("height").value;
+	alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska);
+}
+
+function kontrola(){
+
 }
