@@ -1,7 +1,9 @@
+var regexp = /^\d+[,.]?\d*$/;
+
 function hlaska() {
 	if ((document.getElementById("number").value) == "") {
 		alert("CHYBA: Je nezbytné nejprve vyplnit text");
-	} else if ((document.getElementById("number").value.match(/^\d+[,.]?\d*$/))) {
+	} else if ((document.getElementById("number").value.match(regexp))) {
 		alert("Zvolili jste si číslo: " + document.getElementById("number").value);
 	} else {
 		alert("CHYBA: zadali jste něco jiného, než číslo");
@@ -15,7 +17,7 @@ function spustit() {
 }
 
 function kontrola() {
-	if (document.getElementById("number").value.match(/^\d+[,.]?\d*$/)) {
+	if (document.getElementById("number").value.match(regexp)) {
 		document.getElementById("main_button").removeAttribute("disabled");
 	} else {
 		document.getElementById("main_button").setAttribute("disabled", "disabled");
