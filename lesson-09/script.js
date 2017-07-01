@@ -79,18 +79,15 @@ function porovnat(jmenopole){
 						return false;
 					}
 				}
+			}
+		}
+		else{
+			if(gid(jmenopole).getAttribute("data-format")){
+				if(gid(jmenopole).value.match(gid(jmenopole).getAttribute("data-format"))){
+					return true;
+				}
 				else{
-					if(gid(jmenopole).getAttribute("data-format")){
-						if(gid(jmenopole).value.match(getAttribute("data-format"))){
-							return true;
-						}
-						else{
-							return false;
-						}
-					}
-					else{
-						return true;
-					}				
+					return false;
 				}
 			}
 		}
