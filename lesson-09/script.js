@@ -31,20 +31,12 @@ function kontrola(){
 	yearformat = gid("birth_year").getAttribute("data-format");
 	heightformat = gid("height").getAttribute("data-format");
 	nameformat = gid("height").getAttribute("data-format");
-
-
-//HERE XXXXX
-
-if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
-	gid("main_button").removeAttribute("disabled");
-}
-else{
-	gid("main_button").setAttribute("disabled", "disabled");
-}
-
-//HEREXXXXX
-
-
+	if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
+		gid("main_button").removeAttribute("disabled");
+	}
+	else{
+		gid("main_button").setAttribute("disabled", "disabled");
+	}
 }
 
 function gid(id){
