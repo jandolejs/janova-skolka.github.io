@@ -16,11 +16,11 @@ function spustit(){
 }
 
 function hlaska(){
-	if ((gid("birth_year").value.match(yearformat)) && (gid("height").value.match(heightformat))){
-	var jmeno = gid("name").value;
-	var datum = gid("birth_year").value;
-	var vyska = gid("height").value;
-	alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska + " m");
+	if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
+		var jmeno = gid("name").value;
+		var datum = gid("birth_year").value;
+		var vyska = gid("height").value;
+		alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska + " m");
 	}
 	else{
 		alert("CHYBA: Pole obsahují neplatnou hodnotu");
