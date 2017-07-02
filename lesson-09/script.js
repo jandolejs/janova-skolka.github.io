@@ -1,25 +1,19 @@
-var yearformat;
-var heightformat;
-var pole1;
-var pole2;
-var pole3;
-
 function spustit(){
-	gid("main_button").setAttribute("disabled", "disabled");
-	yearformat = gid("birth_year").getAttribute("data-format");
-	heightformat = gid("height").getAttribute("data-format");
-	gid("main_button").onclick = hlaska;
-	gid("birth_year").oninput = kontrola;
-	gid("height").oninput = kontrola;
-	gid("name").oninput = kontrola;
+	var button = document.getElementById("main_button");
+
+	button.onclick = hlaska;
+	document.getElementById("birth_year").oninput = kontrola;
+	document.getElementById("height").oninput = kontrola;
+	document.getElementById("name").oninput = kontrola;
 	kontrola();
 }
 
 function hlaska(){
-	if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
-		var jmeno = gid("name").value;
-		var datum = gid("birth_year").value;
-		var vyska = gid("height").value;
+	var jmeno = document.getElementById("name").value;
+	var datum = document.getElementById("birth_year").value;
+	var vyska = document.getElementById("height").value;
+
+	if(porovnat("name") && porovnat("birth_year") && porovnat("height")){
 		alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska + " m");
 	}
 	else{
@@ -28,28 +22,28 @@ function hlaska(){
 }
 
 function kontrola(){
-	yearformat = gid("birth_year").getAttribute("data-format");
-	heightformat = gid("height").getAttribute("data-format");
-	nameformat = gid("height").getAttribute("data-format");
+	var button = document.getElementById("main_button");
+
 	if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
-		gid("main_button").removeAttribute("disabled");
+		button.removeAttribute("disabled");
 	}
 	else{
-		gid("main_button").setAttribute("disabled", "disabled");
+		button.setAttribute("disabled", "disabled");
 	}
 }
 
-function gid(id){
-	return document.getElementById(id);
-}
-
-
 function porovnat(jmenopole){
-	if(gid(jmenopole).value > ""){
-		if(gid(jmenopole).getAttribute("data-required")){
-			if(gid(jmenopole).getAttribute("data-required").match("yes")){
-				if(gid(jmenopole).getAttribute("data-format")){
-					if(gid(jmenopole).value.match(gid(jmenopole).getAttribute("data-format"))){
+	var polename = document.getElementById(jmenopole);
+	var polereq = polename.getAttribute("data-required");
+	var poleformat = ((polename.getAttribute("data-format")));
+	if(poleformat){
+		var poleformat = ("^" + poleformat + "$");
+	}
+	if(polename.value > ""){
+		if(polereq){
+			if(polereq.match("yes")){
+				if(poleformat){
+					if(polename.value.match(poleformat)){
 						return true;
 					}
 					else{
@@ -57,8 +51,8 @@ function porovnat(jmenopole){
 					}
 				}
 				else{
-					if(gid(jmenopole).getAttribute("data-format")){
-						if(gid(jmenopole).value.match(getAttribute("data-format"))){
+					if(poleformat){
+						if(polename.value.match(poleformat)){
 							return true;
 						}
 						else{
@@ -71,8 +65,8 @@ function porovnat(jmenopole){
 				}
 			}
 			else{
-				if(gid(jmenopole).getAttribute("data-format")){
-					if(gid(jmenopole).value.match(gid(jmenopole).getAttribute("data-format"))){
+				if(poleformat){
+					if(polename.value.match(poleformat)){
 						return true;
 					}
 					else{
@@ -82,8 +76,8 @@ function porovnat(jmenopole){
 			}
 		}
 		else{
-			if(gid(jmenopole).getAttribute("data-format")){
-				if(gid(jmenopole).value.match(gid(jmenopole).getAttribute("data-format"))){
+			if(poleformat){
+				if(polename.value.match(poleformat)){
 					return true;
 				}
 				else{
@@ -92,9 +86,9 @@ function porovnat(jmenopole){
 			}
 		}
 	}
-	if(gid(jmenopole).value == ""){
-		if(gid(jmenopole).getAttribute("data-required")){
-			if(gid(jmenopole).getAttribute("data-required").match("yes")){
+	if(polename.value == ""){
+		if(polereq){
+			if(polereq.match("yes")){
 				return false;
 			}
 			else{
