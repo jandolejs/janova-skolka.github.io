@@ -24,7 +24,7 @@ function hlaska(){
 function kontrola(){
 	var button = document.getElementById("main_button");
 
-	if(porovnat("name") == true && porovnat("birth_year") == true && porovnat("height") == true){
+	if(porovnat("name") && porovnat("birth_year") && porovnat("height")){
 		button.removeAttribute("disabled");
 	}
 	else{
@@ -39,7 +39,11 @@ function porovnat(jmenopole){
 	if(poleformat){
 		var poleformat = ("^" + poleformat + "$");
 	}
-	if(polename.value > ""){
+
+	if(polename.value.match(/^\s+$/)){
+		return false;
+	}
+	else if(polename.value > ""){
 		if(polereq){
 			if(polereq.match("yes")){
 				if(poleformat){
@@ -86,7 +90,7 @@ function porovnat(jmenopole){
 			}
 		}
 	}
-	if(polename.value == ""){
+	else if(polename.value == ""){
 		if(polereq){
 			if(polereq.match("yes")){
 				return false;
