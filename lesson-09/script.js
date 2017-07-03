@@ -41,7 +41,17 @@ function porovnat(jmenopole){
 	}
 
 	if(polename.value.match(/^\s+$/)){
-		return false;
+		if(polereq){
+			if(polereq.match("yes")){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		else{
+			return true;
+		}
 	}
 	else if(polename.value > ""){
 		if(polereq){
