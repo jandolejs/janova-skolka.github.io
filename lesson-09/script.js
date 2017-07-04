@@ -36,10 +36,11 @@ function porovnat(jmenopole){
 	var polename = document.getElementById(jmenopole);
 	var polereq = polename.getAttribute("data-required");
 	var poleformat = ((polename.getAttribute("data-format")));
+	var poletext = polename.value;
+
 	if(poleformat){
 		var poleformat = ("^" + poleformat + "$");
 	}
-
 	if(polename.value.match(/^\s+$/)){
 		if(polereq){
 			if(polereq.match("yes")){
@@ -49,68 +50,25 @@ function porovnat(jmenopole){
 				return true;
 			}
 		}
-		else{
-			return true;
-		}
 	}
-	else if(polename.value > ""){
-		if(polereq){
-			if(polereq.match("yes")){
-				if(poleformat){
-					if(polename.value.match(poleformat)){
-						return true;
-					}
-					else{
-						return false;
-					}
-				}
-				else{
-					if(poleformat){
-						if(polename.value.match(poleformat)){
-							return true;
-						}
-						else{
-							return false;
-						}
-					}
-					else{
-						return true;
-					}
-				}
-			}
-			else{
-				if(poleformat){
-					if(polename.value.match(poleformat)){
-						return true;
-					}
-					else{
-						return false;
-					}
-				}
-			}
-		}
-		else{
-			if(poleformat){
-				if(polename.value.match(poleformat)){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-		}
-	}
-	else if(polename.value == ""){
-		if(polereq){
-			if(polereq.match("yes")){
-				return false;
-			}
-			else{
-				return true;
-			}	
+	if(poletext == ""){
+		if(polereq == "yes"){
+			return false;
 		}
 		else{
 			return true;
 		}
 	}
+	if(poleformat){
+		if(poletext.match(poleformat)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	else{
+		return true;
+	}
+
 }
