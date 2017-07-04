@@ -39,11 +39,11 @@ function porovnat(jmenopole){
 	var poletext = polename.value;
 
 	if(poleformat){
-		var poleformat = ("^" + poleformat + "$");
+		poleformat = ("^" + poleformat + "$");
 	}
-	if(polename.value.match(/^\s+$/)){
+	if(poletext.match(/^\s+$/)){
 		if(polereq){
-			if(polereq.match("yes")){
+			if(polereq == "yes"){
 				return false;
 			}
 			else{
