@@ -33,17 +33,17 @@ function kontrola(){
 }
 
 function porovnat(jmenopole){
-	var polename = document.getElementById(jmenopole);
-	var polereq = polename.getAttribute("data-required");
-	var poleformat = ((polename.getAttribute("data-format")));
-	var poletext = polename.value;
+	var input = document.getElementById(jmenopole);
+	var isRequired = input.getAttribute("data-required");
+	var isValidFormat = ((input.getAttribute("data-format")));
+	var value = input.value;
 
-	if(poleformat){
-		poleformat = ("^" + poleformat + "$");
+	if(isValidFormat){
+		isValidFormat = ("^" + isValidFormat + "$");
 	}
-	if(poletext.match(/^\s+$/)){
-		if(polereq){
-			if(polereq == "yes"){
+	if(value.match(/^\s+$/)){
+		if(isRequired){
+			if(isRequired == "yes"){
 				return false;
 			}
 			else{
@@ -51,16 +51,16 @@ function porovnat(jmenopole){
 			}
 		}
 	}
-	if(poletext == ""){
-		if(polereq == "yes"){
+	if(value == ""){
+		if(isRequired == "yes"){
 			return false;
 		}
 		else{
 			return true;
 		}
 	}
-	if(poleformat){
-		if(poletext.match(poleformat)){
+	if(isValidFormat){
+		if(value.match(isValidFormat)){
 			return true;
 		}
 		else{
