@@ -34,41 +34,29 @@ function kontrola(){
 
 function porovnat(jmenopole){
 	var input = document.getElementById(jmenopole);
-	var isRequired = input.getAttribute("data-required");
-	var isValidFormat = ((input.getAttribute("data-format")));
 	var value = input.value;
 
-	if(isValidFormat){
-		isValidFormat = ("^" + isValidFormat + "$");
-	}
-	if(value.match(/^\s+$/)){
-		if(isRequired){
-			if(isRequired == "yes"){
-				return false;
-			}
-			else{
-				return true;
-			}
-		}
-	}
-	if(value == ""){
-		if(isRequired == "yes"){
-			return false;
-		}
-		else{
-			return true;
-		}
-	}
-	if(isValidFormat){
-		if(value.match(isValidFormat)){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	else{
-		return true;
+	var requiredFormat = input.getAttribute("data-format");
+	if(requiredFormat) {
+		requiredFormat = ("^" + requiredFormat + "$");
 	}
 
+	var isEmpty = value.match(/^\s*$/);
+	var isRequired = input.getAttribute("data-required") == "yes";
+	var isValidFormat = requiredFormat ? value.match(requiredFormat) : true; // If format not defined => always valid
+
+	if(isEmpty){
+		if(isRequired){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	if(isValidFormat){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
