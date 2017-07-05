@@ -13,7 +13,7 @@ function hlaska(){
 	var datum = document.getElementById("birth_year").value;
 	var vyska = document.getElementById("height").value;
 
-	if(porovnat("name") && porovnat("birth_year") && porovnat("height")){
+	if(idValid("name") && idValid("birth_year") && idValid("height")){
 		alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska + " m");
 	}
 	else{
@@ -24,7 +24,7 @@ function hlaska(){
 function kontrola(){
 	var button = document.getElementById("main_button");
 
-	if(porovnat("name") && porovnat("birth_year") && porovnat("height")){
+	if(idValid("name") && idValid("birth_year") && idValid("height")){
 		button.removeAttribute("disabled");
 	}
 	else{
@@ -32,8 +32,8 @@ function kontrola(){
 	}
 }
 
-function porovnat(jmenopole){
-	var input = document.getElementById(jmenopole);
+function idValid(name){
+	var input = document.getElementById(name);
 	var value = input.value;
 
 	var requiredFormat = input.getAttribute("data-format");
@@ -46,17 +46,8 @@ function porovnat(jmenopole){
 	var isValidFormat = requiredFormat ? value.match(requiredFormat) : true; // If format not defined => always valid
 
 	if(isEmpty){
-		if(isRequired){
-			return false;
-		}
-		else{
-			return true;
-		}
+		return ! isRequired;
 	}
-	if(isValidFormat){
-		return true;
-	}
-	else{
-		return false;
-	}
+
+	return isValidFormat;
 }
