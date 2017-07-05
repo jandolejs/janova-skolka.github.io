@@ -38,7 +38,7 @@ function idValid(name){
 
 	var requiredFormat = input.getAttribute("data-format");
 	if(requiredFormat) {
-		requiredFormat = ("^" + requiredFormat + "$");
+		requiredFormat = new RegExp("^" + requiredFormat + "$");
 	}
 
 	var isEmpty = value.match(/^\s*$/);
