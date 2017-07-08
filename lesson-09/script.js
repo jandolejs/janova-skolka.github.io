@@ -1,10 +1,10 @@
 function spustit(){
 	var button = document.getElementById("main_button");
-
+	var names = document.getElementsByTagName("input");
+	for(var i = 0; i < names.length; i++){
+		document.getElementById(names[i].getAttribute("id")).oninput = kontrola;
+	}
 	button.onclick = hlaska;
-	document.getElementById("birth_year").oninput = kontrola;
-	document.getElementById("height").oninput = kontrola;
-	document.getElementById("name").oninput = kontrola;
 	kontrola();
 }
 
