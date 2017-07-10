@@ -2,7 +2,7 @@ function spustit(){
 	var button = document.getElementById("main_button");
 	var names = document.getElementsByTagName("input");
 	for(var i = 0; i < names.length; i++){
-		document.getElementById(names[i].getAttribute("id")).oninput = kontrola;
+		names[i].oninput = kontrola;
 	}
 	button.onclick = hlaska;
 	kontrola();
@@ -23,12 +23,17 @@ function hlaska(){
 
 function kontrola(){
 	var button = document.getElementById("main_button");
+	var names = document.getElementsByTagName("input");
 
-	if(idValid("name") && idValid("birth_year") && idValid("height")){
-		button.removeAttribute("disabled");
-	}
-	else{
-		button.setAttribute("disabled", "disabled");
+	for(var i = 0; i < names.length; i++){
+		names[i].oninput = kontrola;
+		if(!idValid(names[i].getAttribute("id"))){
+			button.setAttribute("disabled", "disabled");
+			return;
+		}
+		else{
+			button.removeAttribute("disabled");
+		}
 	}
 }
 
