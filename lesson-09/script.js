@@ -13,7 +13,7 @@ function hlaska(){
 	var datum = document.getElementById("birth_year").value;
 	var vyska = document.getElementById("height").value;
 
-	if(idValid("name") && idValid("birth_year") && idValid("height")){
+	if(isValid("name") && isValid("birth_year") && isValid("height")){
 		alert("Zadali jste tyto údaje:" + "\nJméno: " + jmeno + "\nNarozen: " + datum + "\nVýška: " + vyska + " m");
 	}
 	else{
@@ -27,7 +27,7 @@ function kontrola(){
 
 	for(var i = 0; i < names.length; i++){
 		names[i].oninput = kontrola;
-		if(!idValid(names[i].getAttribute("id"))){
+		if(!isValid(names[i].getAttribute("id"))){
 			button.setAttribute("disabled", "disabled");
 			return;
 		}
@@ -37,7 +37,7 @@ function kontrola(){
 	}
 }
 
-function idValid(name){
+function isValid(name){
 	var input = document.getElementById(name);
 	var value = input.value;
 
