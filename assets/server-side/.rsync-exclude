@@ -1,0 +1,5 @@
+.gitignore
+.rsync-exclude
+composer.json
+composer.lock
+deploy.sh
