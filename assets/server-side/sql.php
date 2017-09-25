@@ -18,7 +18,7 @@ function getPost($name, $default = NULL) {
 $sql = getPost('query');
 
 if( !$sql ) {
-	errorResponse("No query sent");
+	errorResponse("No query sent", "Pohodný náhled do databáze přes Adminer: https://sql.jandolejs.cz/adminer");
 }
 
 $database = SqlCredentials::getConnection();
@@ -63,16 +63,19 @@ function successResponse($data) {
 	die();
 }
 
-function errorResponse($message) {
+function errorResponse($message, $tip) {
 	$response = [
 		'status' => FALSE,
 		'error' => $message,
 	];
+	if($tip) {
+		$response['tip'] = $tip;
+	}
 	sendResponse($response);
 	die();
 }
 
 function sendResponse($response) {
-	header('Content-Type: application/json');
+	header('Content-Type: application/json; charset=utf-8');
 	echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }
