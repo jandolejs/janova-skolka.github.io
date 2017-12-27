@@ -18,11 +18,11 @@ $SSH sudo fixwww $REMOTE_DIR
 
 # echo -n "Remove nette email-sent marker… "
 # ssh sbl /bin/bash << EOF
-# 	if [ -f ${REMOTE_DIR}/log/email-sent ]
-# 	then
-# 		rm ${REMOTE_DIR}/log/email-sent
-# 		echo "removed"
-# 	else
-# 		echo "no exists"
-# 	fi
+#     if [ -f ${REMOTE_DIR}/log/email-sent ]
+#     then
+#         rm ${REMOTE_DIR}/log/email-sent
+#         echo "removed"
+#     else
+#         echo "no exists"
+#     fi
 # EOF

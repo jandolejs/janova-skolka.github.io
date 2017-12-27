@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="noindex, nofollow">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
 
-	<title>Janova školka HTML - Lekce 6</title>
+    <title>Janova školka HTML - Lekce 6</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
-	<script src="script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+    <script src="script.js"></script>
 </head>
 <body onload="spustit();">
-	<div class="container">
-		<div class="jumbotron">
-			<h1>Lekce 6</h1>
-			<p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem "Zvolili jste si číslo: X" kde místo čísla X bude to napsané do textového pole.<br>
-				Ovšem, pokud uživatel nic nevyplnil, tak se musí <strong>místo toho</strong> zobrazit chybová hláška: <em>CHYBA: Je nezbytné nejprve vyplnit text</em>.<br>
-				A pokud zadal něco jiného, než číslo, musí se zobrazit chyba: <em>CHYBA: zadali jste něco jiného, než číslo</em></p>
-			<p><span class="label label-danger">Nově:</span> Tlačítko ale nesmí být možné stisknout, dokud nebude obsah textového pole splňovat výše uvedené podmínky.</p>
-			<p><small>Stejně jako v předchozí lekci smíš dělat úpravy pouze v kódu souboru <code><a href="script.js">script.js</a></code></small></p>
-			<div class="form-group">
-				<label for="name">Vámi zvolené číslo</label>
-				<input type="text" class="form-control" id="number">
-			</div>
-			<button class="btn btn-primary" id="main_button">Stiskni mě</button>
-			<p><small>Nápověda: pro znemožnění stisknutí tlačítka využij HTML atribut <code><a href="https://developer.mozilla.org/en/docs/Web/HTML/Element/button#attr-disabled">disabled</a></code>. </small></p>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Lekce 6</h1>
+            <p>Tvým úkolem je, aby se po jeho stisknutí objevilo okno s textem "Zvolili jste si číslo: X" kde místo čísla X bude to napsané do textového pole.<br>
+                Ovšem, pokud uživatel nic nevyplnil, tak se musí <strong>místo toho</strong> zobrazit chybová hláška: <em>CHYBA: Je nezbytné nejprve vyplnit text</em>.<br>
+                A pokud zadal něco jiného, než číslo, musí se zobrazit chyba: <em>CHYBA: zadali jste něco jiného, než číslo</em></p>
+            <p><span class="label label-danger">Nově:</span> Tlačítko ale nesmí být možné stisknout, dokud nebude obsah textového pole splňovat výše uvedené podmínky.</p>
+            <p><small>Stejně jako v předchozí lekci smíš dělat úpravy pouze v kódu souboru <code><a href="script.js">script.js</a></code></small></p>
+            <div class="form-group">
+                <label for="name">Vámi zvolené číslo</label>
+                <input type="text" class="form-control" id="number">
+            </div>
+            <button class="btn btn-primary" id="main_button">Stiskni mě</button>
+            <p><small>Nápověda: pro znemožnění stisknutí tlačítka využij HTML atribut <code><a href="https://developer.mozilla.org/en/docs/Web/HTML/Element/button#attr-disabled">disabled</a></code>. </small></p>
 
-		</div>
+        </div>
 
-	</div>
+    </div>
 </body>
 </html>
