@@ -63,7 +63,7 @@ function successResponse($data) {
 	die();
 }
 
-function errorResponse($message, $tip) {
+function errorResponse($message, $tip = null) {
 	$response = [
 		'status' => FALSE,
 		'error' => $message,
