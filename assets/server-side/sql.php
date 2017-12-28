@@ -15,10 +15,14 @@ function getPost($name, $default = NULL) {
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    errorResponse("Invalid method", "You must use POST request", 405);
+}
+
 $sql = getPost('query');
 
 if( !$sql ) {
-    errorResponse("No query sent", "Pohodný náhled do databáze přes Adminer: https://sql.jandolejs.cz/adminer");
+    errorResponse("No query sent", "Pohodný náhled do databáze přes Adminer: https://sql.jandolejs.cz/adminer", 400);
 }
 
 $database = SqlCredentials::getConnection();
@@ -48,10 +52,10 @@ try {
     ]);
 }
 catch(\PDOException $e) {
-    errorResponse("Chybný SQL: " . $e->getMessage() . " (code: " . $e->getCode() . ")");
+    errorResponse("Chybný SQL: " . $e->getMessage() . " (code: " . $e->getCode() . ")", null,403);
 }
 catch(\Exception $e) {
-    errorResponse("Neznámá chyba: " . $e->getMessage() . " (code: " . $e->getCode() . ")");
+    errorResponse("Neznámá chyba: " . $e->getMessage() . " (code: " . $e->getCode() . ")",null, 500);
 }
 
 function successResponse($data) {
@@ -63,7 +67,7 @@ function successResponse($data) {
     die();
 }
 
-function errorResponse($message, $tip = null) {
+function errorResponse($message, $tip = null, $code = null) {
     $response = [
         'status' => FALSE,
         'error' => $message,
@@ -71,11 +75,11 @@ function errorResponse($message, $tip = null) {
     if($tip) {
         $response['tip'] = $tip;
     }
-    sendResponse($response);
+    sendResponse($response, $code);
     die();
 }
 
-function sendResponse($response) {
-    header('Content-Type: application/json; charset=utf-8');
+function sendResponse($response, $code = null) {
+    header('Content-Type: application/json; charset=utf-8', true, $code);
     echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }

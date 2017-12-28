@@ -8,22 +8,21 @@ function start() {
 function query() {
     reset();
     var sqlInput = document.getElementById('sql');
-    if(sqlInput.validity.valid == false) {
+    if(sqlInput.validity.valid === false) {
         return false;
     }
     var sql = sqlInput.value;
-    ajaxPost(sql)
+    asyncRequest(sql)
         .then((data) => {
             printResult(data);
         })
         .catch((status) => {
-            printError("Při volání došlo k chybě na serveru (status " + status + ")");
+            printError("Při volání došlo k chybě: " + status);
         });
 }
 
 function printResult(data) {
     try{
-        data = JSON.parse(data);
         if(data.status !== true) {
             throw new Error(data.error);
         }
@@ -103,21 +102,23 @@ function reset() {
     document.querySelectorAll("#result table thead, #result table tbody").forEach((item)=>{item.parentNode.removeChild(item)});
 }
 
-function ajaxPost(query) {
+function asyncRequest(query) {
     return new Promise((resolve, reject) => {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4) {
-                if(xmlhttp.status == 200) {
-                    resolve(xmlhttp.responseText);
-                }
-                else {
-                    reject(xmlhttp.status);
-                }
-            }
-        }
-        xmlhttp.open("POST", "https://sql.jandolejs.cz/", true);
-        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xmlhttp.send("query=" + encodeURI(query));
+        var reqBody = new FormData();
+        reqBody.append("query", query);
+        fetch("https://sql.jandolejs.cz/", {"method": "POST", "body": reqBody})
+            .then(function(response){
+                response.json().then((data)=>{
+                    if(response.ok){
+                        resolve(data);
+                    }
+                    else {
+                        reject(data.error);
+                    }
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
     });
 }
