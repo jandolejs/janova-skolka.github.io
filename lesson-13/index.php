@@ -1,3 +1,18 @@
+<?php
+
+    $areSet = false;
+    $isInvalid = false;
+
+    if(isset($_POST["name"]) && isset($_POST["phone"])){
+        //  formulář odeslaný
+        if($_POST["name"] != "" && $_POST["phone"] != ""){
+            $areSet = true;
+        } else {
+            //  byl odeslán ale není validní
+            $isInvalid = true;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -33,7 +48,7 @@
                             <th>Jméno:</th>
                             <td>
                             <?php
-                                if(isset($_POST["name"])) {
+                                if($areSet) {
                                     echo $_POST["name"];
                                 } else {
                                     echo '-';
@@ -43,12 +58,23 @@
                         </tr>
                         <tr>
                             <th>Telefon:</th>
-                            <td>(sem hodnotu, nebo pomlčku)</td>
+                            <td>
+                            <?php
+                                if($areSet) {
+                                    echo $_POST["phone"];
+                                } else {
+                                    echo '-';
+                                }
+                            ?>
+                            </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <h3>Formulář</h3>
+            <?php if($isInvalid): ?>
+                <div class="alert alert-danger" role="alert"><strong>Pozor!</strong> Musíte vypnit všechna políčka.</div>
+            <?php endif; ?>
             <form action="" method="post">
             <div class="form-group">
                 <label for="name">Jméno *</label>
