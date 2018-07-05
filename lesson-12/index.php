@@ -25,7 +25,13 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    Jméno odeslané ve formuláři: <strong>(sem vypiš)</strong>
+                    Jméno odeslané ve formuláři:
+                    <strong>
+                        <?php
+                            if(isset($_POST["name"])) {echo htmlspecialchars($_POST["name"], ENT_QUOTES, 'UTF-8'); }
+                            else {echo '-'; }
+                        ?>
+                    </strong>
                 </div>
             </div>
             <form action="" method="post">
