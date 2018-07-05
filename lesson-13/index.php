@@ -1,5 +1,9 @@
 <?php
 
+    function escapeHtml($text){
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
     $areSet = false;
     $isInvalid = false;
 
@@ -49,7 +53,7 @@
                             <td>
                             <?php
                                 if($areSet) {
-                                    echo $_POST["name"];
+                                    echo escapeHtml($_POST["name"]);
                                 } else {
                                     echo '-';
                                 }
@@ -61,7 +65,7 @@
                             <td>
                             <?php
                                 if($areSet) {
-                                    echo $_POST["phone"];
+                                    echo escapeHtml($_POST["phone"]);
                                 } else {
                                     echo '-';
                                 }
