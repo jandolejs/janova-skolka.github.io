@@ -28,7 +28,7 @@
                     Jméno odeslané ve formuláři:
                     <strong>
                         <?php
-                            if(isset($_POST[name])) {echo $_POST[name]; }
+                            if(isset($_POST["name"])) {echo $_POST["name"]; }
                             else {echo '-'; }
                         ?>
                     </strong>
