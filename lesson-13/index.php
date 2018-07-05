@@ -82,11 +82,13 @@
             <form action="" method="post">
             <div class="form-group">
                 <label for="name">Jméno *</label>
-                <input type="text" class="form-control" name="name" id="name">
+                <?php if($isInvalid){$valueToForm = escapeHtml($_POST["name"]); } ?>
+                <input type="text" class="form-control" name="name" id="name" value="<?php if($isInvalid){echo $valueToForm; } ?>">
             </div>
             <div class="form-group">
                 <label for="phone">Telefon *</label>
-                <input type="text" class="form-control" name="phone" id="phone">
+                <?php if($isInvalid){$valueToForm = escapeHtml($_POST["phone"]); } ?>
+                <input type="text" class="form-control" name="phone" id="phone" value="<?php if($isInvalid){echo $valueToForm; } ?>">
             </div>
             <input type="submit" value="Odeslat" class="btn btn-primary">
         </form>
