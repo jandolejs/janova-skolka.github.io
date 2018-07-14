@@ -121,6 +121,7 @@
                         <li>zpracování formuláře bude v jednom <code>try {}</code> bloku,</li>
                         <li>pokud bude jakákoliv chyba, vyhodí se výjimka,</li>
                         <li>ta se zachytí a podle ní se nastaví chybové oznámení pro uživatele.</li>
+                        <li>Použij základní výjimku <code>\Exception</code>, nevytvářej zatím žádnou vlastní.</li>
                         <li>Zvaž změnu chování <code>$errors</code> z pole na něco vhodného.</li>
                     </ul>
                 </li>
