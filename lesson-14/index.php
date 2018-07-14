@@ -30,7 +30,7 @@
     }
 
     function isFormSent($formName) {
-        return getFormValue('action') === 'registration-form';
+        return getFormValue('action') === $formName;
     }
 
     function validateRequired($value, $title) {
