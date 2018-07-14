@@ -4,7 +4,7 @@
     $errors = [];
 
     //form send
-    if(isFormSent('registration-form')) {
+    if (isFormSent('registration-form')) {
         $name = getFormValue('name');
         validateRequired($name, 'Jméno') && validateName($name, 'Jméno');
 
@@ -14,65 +14,74 @@
         $email = getFormValue("email");
         isFilled($email) && validateEmail($email, "Email");
 
-        if(count($errors) === 0) {
+        if (count($errors) === 0) {
             $formValid = true;
         }
     }
 
     // === Pomocné funkce ===
 
-    function escapeHtml($text){
+    function escapeHtml($text)
+    {
         return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
     }
 
-    function getFormValue($inputName, $default = '') {
-        if(isset($_POST[$inputName])) {
+    function getFormValue($inputName, $default = '')
+    {
+        if (isset($_POST[$inputName])) {
             return $_POST[$inputName];
         }
         return $default;
     }
 
-    function isFormSent($formName) {
+    function isFormSent($formName)
+    {
         return getFormValue('action') === $formName;
     }
 
-    function validateRequired($value, $title) {
+    function validateRequired($value, $title)
+    {
         $isValid = ($value !== '');
-        if(!$isValid) {
+        if (!$isValid) {
             addError("Pole $title není vyplněno, prosím, vyplňte jej.");
         }
         return $isValid;
     }
 
-    function validateName($value, $title) {
+    function validateName($value, $title)
+    {
         $isValid = !preg_match('/\d/', $value);
-        if(!$isValid) {
+        if (!$isValid) {
             addError("Pole $title nesmí obsahovat číslo.");
         }
         return $isValid;
     }
 
-    function validatePhone($value, $title) {
+    function validatePhone($value, $title)
+    {
         $isValid = preg_match('/^ *(\d *){9}$/', $value);
-        if(!$isValid) {
+        if (!$isValid) {
             addError("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
         }
         return $isValid;
     }
 
-    function validateEmail($value, $title) {
+    function validateEmail($value, $title)
+    {
         $isValid = filter_var($value, FILTER_VALIDATE_EMAIL);
-        if(!$isValid){
+        if (!$isValid) {
             addError("$title byl vyplněn ale je neplatný.");
         }
         return $isValid;
     }
 
-    function isFilled($value) {
+    function isFilled($value)
+    {
         return $value !== '';
     }
 
-    function addError($error) {
+    function addError($error)
+    {
         global $errors;
         $errors[] = $error;
     }
