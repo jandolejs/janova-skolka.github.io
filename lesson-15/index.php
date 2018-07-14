@@ -11,9 +11,9 @@
         $phone = getFormValue('phone');
         validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
 
-        if(getFormValue('email') !== ''){
-            if(!validateEmail(getFormValue("email"))){addError("Email byl vyplněn ale je neplatný."); }
-        }
+        $email = getFormValue("email");
+        isFilled($email) && validateEmail($email, "Email");
+
         if(count($errors) === 0) {
             $formValid = true;
         }
@@ -60,8 +60,16 @@
         return $isValid;
     }
 
-    function validateEmail($value) {
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
+    function validateEmail($value, $title) {
+        $isValid = filter_var($value, FILTER_VALIDATE_EMAIL);
+        if(!$isValid){
+            addError("$title byl vyplněn ale je neplatný.");
+        }
+        return $isValid;
+    }
+
+    function isFilled($value) {
+        return $value !== '';
     }
 
     function addError($error) {
@@ -125,7 +133,7 @@
                             <?php echo escapeHtml($_POST['phone']); ?>
                             </td>
                         </tr>
-                        <?php if(validateEmail(getFormValue("email"))): ?>
+                        <?php if(isFilled(getFormValue("email"))): ?>
                         <tr>
                             <th>Email:</th>
                             <td>
