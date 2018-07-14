@@ -11,6 +11,9 @@
         $phone = getFormValue('phone');
         validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
 
+        if(getFormValue('email')){
+            if(!validateEmail(getFormValue("email"))){addError("Email byl vyplněn ale je neplatný."); }
+        }
         if(count($errors) === 0) {
             $formValid = true;
         }
@@ -55,6 +58,10 @@
             addError("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
         }
         return $isValid;
+    }
+
+    function validateEmail($value) {
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
     function addError($error) {
@@ -118,6 +125,14 @@
                             <?php echo escapeHtml($_POST['phone']); ?>
                             </td>
                         </tr>
+                        <?php if(validateEmail(getFormValue("email"))): ?>
+                        <tr>
+                            <th>Email:</th>
+                            <td>
+                            <?php echo escapeHtml($_POST['email']); ?>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
                     </table>
                     <?php else: ?>
                     <div class="alert alert-info" role="alert">
