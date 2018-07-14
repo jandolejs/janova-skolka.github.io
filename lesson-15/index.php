@@ -11,7 +11,7 @@
         $phone = getFormValue('phone');
         validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
 
-        if(getFormValue('email')){
+        if(getFormValue('email') !== ''){
             if(!validateEmail(getFormValue("email"))){addError("Email byl vyplněn ale je neplatný."); }
         }
         if(count($errors) === 0) {
