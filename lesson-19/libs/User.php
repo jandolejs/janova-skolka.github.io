@@ -10,13 +10,8 @@
         private $phone;
         private $email;
 
-        function __construct($name, $phone, $email)
+        function __construct(Name $name, Phone $phone, ?Email $email)
         {
-
-            Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
-            Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
-            $this->isFilled($email) && Validate::email($email, 'Email');
-
             $this->name = $name;
             $this->phone = $phone;
             $this->email = $email;
@@ -37,14 +32,9 @@
             return $this->email;
         }
 
-        function isFilled($value)
-        {
-            return $value !== '';
-        }
-
         function hasEmail()
         {
-            return $this->isFilled($this->email);
+            return $this->email instanceof Email;
         }
 
     }

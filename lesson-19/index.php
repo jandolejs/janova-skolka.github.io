@@ -5,17 +5,25 @@
     require_once __DIR__ . '/libs/Escape.php';
     require_once __DIR__ . '/libs/Validate.php';
     require_once __DIR__ . '/libs/User.php';
+    require_once __DIR__ . '/libs/Name.php';
+    require_once __DIR__ . '/libs/Phone.php';
+    require_once __DIR__ . '/libs/Email.php';
 
     $user = null;
     $errorCaught = null;
 
     //form send
     if (isFormSent('registration-form')) {
-        $name = getFormValue('name');
-        $phone = getFormValue('phone');
-        $email = getFormValue('email');
-
         try {
+            $name  = new Name(getFormValue('name'));
+            $phone = new Phone(getFormValue('phone'));
+
+            if(isFilled(getFormValue('email'))) {
+                $email = new Email(getFormValue('email'));
+            } else {
+                $email = null;
+            }
+
             $user = new User($name, $phone, $email);
         } catch (\Exception $errorCaught) {
             $errorCaught = $errorCaught->getMessage();
@@ -36,6 +44,10 @@
     function isFormSent($formName)
     {
         return getFormValue('action') === $formName;
+    }
+
+    function isFilled($value) {
+        return $value !== '';
     }
 
 ?>
@@ -83,20 +95,20 @@
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                                <?php echo Escape::html($user->getName()); ?>
+                                <?php echo Escape::html($user->getName()->getContent()); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                                <?php echo Escape::html($user->getPhone()); ?>
+                                <?php echo Escape::html($user->getPhone()->getContent()); ?>
                             </td>
                         </tr>
                         <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->getEmail()); ?>
+                                    <?php echo Escape::html($user->getEmail()->getContent()); ?>
                                 </td>
                             </tr>
                         <?php endif; ?>
