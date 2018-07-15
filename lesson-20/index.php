@@ -2,16 +2,11 @@
 
     namespace Lesson20;
 
-    require_once __DIR__ . '/libs/Escape.php';
-    require_once __DIR__ . '/libs/Validate.php';
-    require_once __DIR__ . '/libs/User.php';
-    require_once __DIR__ . '/libs/ContentType.php';
-    require_once __DIR__ . '/libs/Name.php';
-    require_once __DIR__ . '/libs/Phone.php';
-    require_once __DIR__ . '/libs/Email.php';
-    require_once __DIR__ . '/libs/Message.php';
-    require_once __DIR__ . '/libs/Mail/MailerException.php';
-    require_once __DIR__ . '/libs/Mail/Mailer.php';
+    require __DIR__ . '/../vendor/autoload.php';
+    $loader = new \Nette\Loaders\RobotLoader;
+    $loader->addDirectory(__DIR__ . '/libs');
+    $loader->setTempDirectory(__DIR__ . '/../temp/cache');
+    $loader->register(); // spustíme RobotLoader
 
     // === Ukázka použítí maileru pro odeslání e-mailu ===
     // Pro odeslání e-mailu je povinné vyplnění: jména, e-mailu a zprávy
