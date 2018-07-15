@@ -22,9 +22,9 @@
     $user = null;
     $errorCaught = null;
     $mainParameters = [
-       'name' => 'Jan Dolejš',
-       'email' => 'janova-skolka@googlegroups.com',
-       'message' => 'Toto je DEMO zpráva...',
+       // 'name' => 'Jan Dolejš',
+       // 'email' => 'janova-skolka@googlegroups.com',
+       // 'message' => 'Toto je DEMO zpráva...',
     ];
 
     //form send
@@ -32,17 +32,21 @@
         try {
 
             $name  = new Name(getFormValue('name'));
+            $mainParameters['name'] = $name->getContent();
 
             $message = new Message(getFormValue('message'));
+            $mainParameters['message'] = $message->getContent();
 
             if(isFilled(getFormValue('phone'))) {
                 $phone = new Phone(getFormValue('phone'));
+                $mainParameters['phone'] = $phone->getContent();
             } else {
                 $phone = null;
             }
 
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
+                $mainParameters['email'] = $email->getContent();
             } else {
                 $email = null;
             }
@@ -51,8 +55,10 @@
 
             Mail\Mailer::sendMail($mainParameters);
 
-        } catch (\Exception $errorCaught) {
-            $errorCaught = $errorCaught->getMessage();
+        } catch (Mail\MailerException $e) {
+            $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
+        } catch (\Exception $e) {
+            $errorCaught = $e->getMessage();
         }
     }
 
