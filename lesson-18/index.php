@@ -4,8 +4,9 @@
 
     require_once __DIR__ . '/libs/Escape.php';
     require_once __DIR__ . '/libs/Validate.php';
+    require_once __DIR__ . '/libs/User.php';
 
-    $isFormValid = false;
+    $user = null;
     $errorCaught = null;
 
     //form send
@@ -20,7 +21,10 @@
                 $email = getFormValue('email');
                 isFilled($email) && Validate::email($email, 'Email');
 
-                $isFormValid = true;
+                $user = new User();
+                $user->name = $name;
+                $user->phone = $phone;
+                $user->email = $email;
         } catch (\Exception $errorCaught) {
             $errorCaught = $errorCaught->getMessage();
         }
@@ -85,7 +89,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Data z formuláře</h3>
-                    <?php if($isFormValid): ?>
+                    <?php if($user instanceof User): ?>
                     <div class="alert alert-success" role="alert">
                         Formulář úspěšně odeslán
                     </div>
@@ -93,20 +97,20 @@
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                            <?php echo Escape::html($_POST['name']); ?>
+                            <?php echo Escape::html($user->name); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                            <?php echo Escape::html($_POST['phone']); ?>
+                            <?php echo Escape::html($user->phone); ?>
                             </td>
                         </tr>
-                        <?php if(isFilled(getFormValue('email'))): ?>
+                        <?php if(isFilled($user->email)): ?>
                         <tr>
                             <th>Email:</th>
                             <td>
-                            <?php echo Escape::html($_POST['email']); ?>
+                            <?php echo Escape::html($user->email); ?>
                             </td>
                         </tr>
                         <?php endif; ?>
