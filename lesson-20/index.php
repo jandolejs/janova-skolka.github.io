@@ -42,11 +42,10 @@
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
                 $mainParameters['email'] = $email->getContent();
+                Mail\Mailer::sendMail($mainParameters);
             } else {
                 $email = null;
             }
-
-            Mail\Mailer::sendMail($mainParameters);
 
             $user = new User($name, $phone, $email, $message);
 
@@ -172,7 +171,7 @@
                 <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(getFormValue('email')); ?>">
             </div>
             <div class="form-group">
-                <label for="message">Zpráva</label>
+                <label for="message">Zpráva*</label>
                 <textarea rows="5" type="text" class="form-control" name="message" id="message"><?php echo Escape::html(getFormValue('message')); ?></textarea>
             </div>
             <input type="hidden" name="action" value="registration-form">
