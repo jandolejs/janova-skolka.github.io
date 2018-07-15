@@ -26,7 +26,7 @@
         {
             $isValid = preg_match('/^ *(\d *){9}$/', $value);
             if (!$isValid) {
-                throw new \Exception("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
+                throw new \Exception("Telefon byl vyplněn ale je neplatný.");
             }
             return $isValid;
         }

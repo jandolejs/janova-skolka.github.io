@@ -2,46 +2,57 @@
 
     namespace Lesson20;
 
-    require_once __DIR__ . '/libs/Escape.php';
-    require_once __DIR__ . '/libs/Validate.php';
-    require_once __DIR__ . '/libs/User.php';
-    require_once __DIR__ . '/libs/ContentType.php';
-    require_once __DIR__ . '/libs/Name.php';
-    require_once __DIR__ . '/libs/Phone.php';
-    require_once __DIR__ . '/libs/Email.php';
-    require_once __DIR__ . '/libs/Mail/MailerException.php';
-    require_once __DIR__ . '/libs/Mail/Mailer.php';
+    require __DIR__ . '/../vendor/autoload.php';
+    $loader = new \Nette\Loaders\RobotLoader;
+    $loader->addDirectory(__DIR__ . '/libs');
+    $loader->setTempDirectory(__DIR__ . '/../temp/cache');
+    $loader->register(); // spustíme RobotLoader
 
     // === Ukázka použítí maileru pro odeslání e-mailu ===
     // Pro odeslání e-mailu je povinné vyplnění: jména, e-mailu a zprávy
     // Telefon není povinný – polud jej ale chceš poslat, přidej do parametrů 'phone'
 
-//    $mainParameters = [
-//        'name' => 'Jan Dolejš',
-//        'email' => 'janova-skolka@googlegroups.com',
-//        'message' => 'Toto je DEMO zpráva...',
-//    ];
 
-//    Mail\Mailer::sendMail($mainParameters);
 
     $user = null;
     $errorCaught = null;
+    $mainParameters = [
+       // 'name' => 'Jan Dolejš',
+       // 'email' => 'janova-skolka@googlegroups.com',
+       // 'message' => 'Toto je DEMO zpráva...',
+    ];
 
     //form send
     if (isFormSent('registration-form')) {
         try {
+
             $name  = new Name(getFormValue('name'));
-            $phone = new Phone(getFormValue('phone'));
+            $mainParameters['name'] = $name->getContent();
+
+            $message = new Message(getFormValue('message'));
+            $mainParameters['message'] = $message->getContent();
+
+            if(isFilled(getFormValue('phone'))) {
+                $phone = new Phone(getFormValue('phone'));
+                $mainParameters['phone'] = $phone->getContent();
+            } else {
+                $phone = null;
+            }
 
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
+                $mainParameters['email'] = $email->getContent();
+                Mail\Mailer::sendMail($mainParameters);
             } else {
                 $email = null;
             }
 
-            $user = new User($name, $phone, $email);
-        } catch (\Exception $errorCaught) {
-            $errorCaught = $errorCaught->getMessage();
+            $user = new User($name, $phone, $email, $message);
+
+        } catch (Mail\MailerException $e) {
+            $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
+        } catch (\Exception $e) {
+            $errorCaught = $e->getMessage();
         }
     }
 
@@ -110,11 +121,13 @@
                             </td>
                         </tr>
                         <tr>
+                        <?php if($user->hasPhone()): ?>
                             <th>Telefon:</th>
                             <td>
                                 <?php echo Escape::html($user->getPhone()); ?>
                             </td>
                         </tr>
+                        <?php endif; ?>
                         <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
@@ -123,6 +136,12 @@
                                 </td>
                             </tr>
                         <?php endif; ?>
+                        <tr>
+                            <th>Zpráva:</th>
+                            <td>
+                                <?php echo Escape::html($user->getMessage()); ?>
+                            </td>
+                        </tr>
                     </table>
                 <?php else: ?>
                     <div class="alert alert-info" role="alert">
@@ -144,12 +163,16 @@
                 <input type="text" class="form-control" name="name" id="name" value="<?php echo Escape::html(getFormValue('name')); ?>">
             </div>
             <div class="form-group">
-                <label for="phone">Telefon *</label>
+                <label for="phone">Telefon</label>
                 <input type="text" class="form-control" name="phone" id="phone" value="<?php echo Escape::html(getFormValue('phone')); ?>">
             </div>
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(getFormValue('email')); ?>">
+            </div>
+            <div class="form-group">
+                <label for="message">Zpráva*</label>
+                <textarea rows="5" type="text" class="form-control" name="message" id="message"><?php echo Escape::html(getFormValue('message')); ?></textarea>
             </div>
             <input type="hidden" name="action" value="registration-form">
             <input type="submit" name="submit" value="Odeslat" class="btn btn-primary">

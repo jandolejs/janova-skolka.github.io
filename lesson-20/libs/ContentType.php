@@ -2,8 +2,6 @@
 
     namespace Lesson20;
 
-    require_once __DIR__ . '/Validate.php';
-
     class ContentType
     {
     	protected $content;
