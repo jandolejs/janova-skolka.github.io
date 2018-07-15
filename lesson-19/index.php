@@ -1,56 +1,55 @@
 <?php
 
-namespace Lesson19;
+    namespace Lesson19;
 
-require_once __DIR__ . '/libs/Escape.php';
-require_once __DIR__ . '/libs/Validate.php';
-require_once __DIR__ . '/libs/User.php';
+    require_once __DIR__ . '/libs/Escape.php';
+    require_once __DIR__ . '/libs/Validate.php';
+    require_once __DIR__ . '/libs/User.php';
+    require_once __DIR__ . '/libs/ContentType.php';
+    require_once __DIR__ . '/libs/Name.php';
+    require_once __DIR__ . '/libs/Phone.php';
+    require_once __DIR__ . '/libs/Email.php';
 
-$user = null;
-$errorCaught = null;
+    $user = null;
+    $errorCaught = null;
 
-//form send
-if (isFormSent('registration-form')) {
-    try {
-        $name = getFormValue('name');
-        Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
+    //form send
+    if (isFormSent('registration-form')) {
+        try {
+            $name  = new Name(getFormValue('name'));
+            $phone = new Phone(getFormValue('phone'));
 
-        $phone = getFormValue('phone');
-        Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
+            if(isFilled(getFormValue('email'))) {
+                $email = new Email(getFormValue('email'));
+            } else {
+                $email = null;
+            }
 
-        $email = getFormValue('email');
-        isFilled($email) && Validate::email($email, 'Email');
-
-        $user = new User();
-        $user->name = $name;
-        $user->phone = $phone;
-        $user->email = $email;
-    } catch (\Exception $errorCaught) {
-        $errorCaught = $errorCaught->getMessage();
+            $user = new User($name, $phone, $email);
+        } catch (\Exception $errorCaught) {
+            $errorCaught = $errorCaught->getMessage();
+        }
     }
-}
 
 
-// === Pomocné funkce ===
-function getFormValue($inputName, $default = '')
-{
-    if (isset($_POST[$inputName])) {
-        return $_POST[$inputName];
+    // === Pomocné funkce ===
+    function getFormValue($inputName, $default = '')
+    {
+        if (isset($_POST[$inputName])) {
+            return $_POST[$inputName];
+        }
+        return $default;
     }
-    return $default;
-}
 
 
-function isFormSent($formName)
-{
-    return getFormValue('action') === $formName;
-}
+    function isFormSent($formName)
+    {
+        return getFormValue('action') === $formName;
+    }
 
-
-function isFilled($value)
-{
-    return $value !== '';
-}
+    function isFilled($value) {
+        return $value !== '';
+    }
 
 ?>
 <!DOCTYPE html>
@@ -97,20 +96,20 @@ function isFilled($value)
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                                <?php echo Escape::html($user->name); ?>
+                                <?php echo Escape::html($user->getName()); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                                <?php echo Escape::html($user->phone); ?>
+                                <?php echo Escape::html($user->getPhone()); ?>
                             </td>
                         </tr>
-                        <?php if(isFilled($user->email)): ?>
+                        <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->email); ?>
+                                    <?php echo Escape::html($user->getEmail()); ?>
                                 </td>
                             </tr>
                         <?php endif; ?>

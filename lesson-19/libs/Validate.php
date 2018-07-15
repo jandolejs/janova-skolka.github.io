@@ -1,8 +1,8 @@
 <?php
 
-namespace Lesson19;
+    namespace Lesson19;
 
-class Validate
+    class Validate
     {
         static function email($value, $title)
         {
