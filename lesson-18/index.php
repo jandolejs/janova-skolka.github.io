@@ -71,7 +71,7 @@
         <div class="jumbotron">
             <p><a href="../">« Další úkoly</a></p>
             <h1>Lekce 18</h1>
-            <p><strong>OOP (static)</strong></p>
+            <p><strong>OOP (instance)</strong></p>
 
             <p>Tvůj úkol je:</p>
             <ul>
