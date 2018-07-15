@@ -9,6 +9,7 @@
     require_once __DIR__ . '/libs/Name.php';
     require_once __DIR__ . '/libs/Phone.php';
     require_once __DIR__ . '/libs/Email.php';
+    require_once __DIR__ . '/libs/Message.php';
     require_once __DIR__ . '/libs/Mail/MailerException.php';
     require_once __DIR__ . '/libs/Mail/Mailer.php';
 
@@ -31,8 +32,11 @@
     if (isFormSent('registration-form')) {
         try {
             $name  = new Name(getFormValue('name'));
+            $message = new Message(getFormValue('message'));
             if(isFilled(getFormValue('phone'))) {
                 $phone = new Phone(getFormValue('phone'));
+            } else {
+                $phone = null;
             }
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
@@ -40,7 +44,7 @@
                 $email = null;
             }
 
-            $user = new User($name, $phone, $email);
+            $user = new User($name, $phone, $email, $message);
         } catch (\Exception $errorCaught) {
             $errorCaught = $errorCaught->getMessage();
         }
@@ -126,6 +130,12 @@
                                 </td>
                             </tr>
                         <?php endif; ?>
+                            <tr>
+                                <th>Zpráva:</th>
+                                <td>
+                                    <?php echo Escape::html($user->getMessage()); ?>
+                                </td>
+                            </tr>
                     </table>
                 <?php else: ?>
                     <div class="alert alert-info" role="alert">
@@ -153,6 +163,10 @@
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(getFormValue('email')); ?>">
+            </div>
+            <div class="form-group">
+                <label for="email">Zpráva</label>
+                <textarea rows="5" type="text" class="form-control" name="message" id="message"><?php echo Escape::html(getFormValue('message')); ?></textarea>
             </div>
             <input type="hidden" name="action" value="registration-form">
             <input type="submit" name="submit" value="Odeslat" class="btn btn-primary">
