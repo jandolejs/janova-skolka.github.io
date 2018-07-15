@@ -1,21 +1,26 @@
 <?php
 
+    namespace Lesson16;
+
+    $isFormValid = false;
     $errorCaught = "";
 
     //form send
-    try{
-        if (isFormSent('registration-form')) {
-            $name = getFormValue('name');
-            validateRequired($name, 'Jméno') && validateName($name, 'Jméno');
+    if (isFormSent('registration-form')) {
+        try {
+                $name = getFormValue('name');
+                validateRequired($name, 'Jméno') && validateName($name, 'Jméno');
 
-            $phone = getFormValue('phone');
-            validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
+                $phone = getFormValue('phone');
+                validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
 
-            $email = getFormValue("email");
-            isFilled($email) && validateEmail($email, "Email");
+                $email = getFormValue("email");
+                isFilled($email) && validateEmail($email, "Email");
+
+                $isFormValid = true;
+        } catch (\Exception $errorCaught) {
+            $errorCaught = $errorCaught->getMessage();
         }
-    } catch (Exception $errorCaught) {
-        $errorCaught = $errorCaught->getMessage();
     }
 
 
@@ -45,7 +50,7 @@
     {
         $isValid = ($value !== '');
         if (!$isValid) {
-            throw new Exception("Pole $title není vyplněno, prosím, vyplňte jej.");
+            throw new \Exception("Pole $title není vyplněno, prosím, vyplňte jej.");
         }
         return $isValid;
     }
@@ -55,7 +60,7 @@
     {
         $isValid = !preg_match('/\d/', $value);
         if (!$isValid) {
-            throw new Exception("Pole $title nesmí obsahovat číslo.");
+            throw new \Exception("Pole $title nesmí obsahovat číslo.");
         }
         return $isValid;
     }
@@ -64,7 +69,7 @@
     {
         $isValid = preg_match('/^ *(\d *){9}$/', $value);
         if (!$isValid) {
-            throw new Exception("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
+            throw new \Exception("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
         }
         return $isValid;
     }
@@ -74,7 +79,7 @@
     {
         $isValid = filter_var($value, FILTER_VALIDATE_EMAIL);
         if (!$isValid) {
-            throw new Exception("$title byl vyplněn ale je neplatný.");
+            throw new \Exception("$title byl vyplněn ale je neplatný.");
         }
         return $isValid;
     }
@@ -123,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Data z formuláře</h3>
-                    <?php if(!$errorCaught): ?>
+                    <?php if($isFormValid): ?>
                     <div class="alert alert-success" role="alert">
                         Formulář úspěšně odeslán
                     </div>
