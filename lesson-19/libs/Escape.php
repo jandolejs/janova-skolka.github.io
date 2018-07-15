@@ -1,8 +1,8 @@
 <?php
 
-namespace Lesson19;
+    namespace Lesson19;
 
-class Escape
+    class Escape
     {
         static function html($text)
         {

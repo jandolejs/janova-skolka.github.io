@@ -2,7 +2,7 @@
 
     namespace Lesson19;
 
-	require_once __DIR__ . '/Validate.php';
+    require_once __DIR__ . '/Validate.php';
 
     class User
     {
@@ -13,38 +13,38 @@
         function __construct($name, $phone, $email)
         {
 
-			Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
-			Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
-			$this->isFilled($email) && Validate::email($email, 'Email');
+            Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
+            Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
+            $this->isFilled($email) && Validate::email($email, 'Email');
 
-        	$this->name = $name;
-        	$this->phone = $phone;
-        	$this->email = $email;
+            $this->name = $name;
+            $this->phone = $phone;
+            $this->email = $email;
         }
 
         function getName()
         {
-        	return $this->name;
+            return $this->name;
         }
 
         function getPhone()
         {
-        	return $this->phone;
+            return $this->phone;
         }
 
         function getEmail()
         {
-        	return $this->email;
+            return $this->email;
         }
 
-		function isFilled($value)
-		{
-		    return $value !== '';
-		}
+        function isFilled($value)
+        {
+            return $value !== '';
+        }
 
-		function hasEmail()
-		{
-			return $this->isFilled($this->email);
-		}
+        function hasEmail()
+        {
+            return $this->isFilled($this->email);
+        }
 
     }

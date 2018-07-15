@@ -1,43 +1,42 @@
 <?php
 
-namespace Lesson19;
+    namespace Lesson19;
 
-require_once __DIR__ . '/libs/Escape.php';
-require_once __DIR__ . '/libs/Validate.php';
-require_once __DIR__ . '/libs/User.php';
+    require_once __DIR__ . '/libs/Escape.php';
+    require_once __DIR__ . '/libs/Validate.php';
+    require_once __DIR__ . '/libs/User.php';
 
-$user = null;
-$errorCaught = null;
+    $user = null;
+    $errorCaught = null;
 
-//form send
-if (isFormSent('registration-form')) {
-    $name = getFormValue('name');
-    $phone = getFormValue('phone');
-    $email = getFormValue('email');
+    //form send
+    if (isFormSent('registration-form')) {
+        $name = getFormValue('name');
+        $phone = getFormValue('phone');
+        $email = getFormValue('email');
 
-    try {
-        $user = new User($name, $phone, $email);
-    } catch (\Exception $errorCaught) {
-        $errorCaught = $errorCaught->getMessage();
+        try {
+            $user = new User($name, $phone, $email);
+        } catch (\Exception $errorCaught) {
+            $errorCaught = $errorCaught->getMessage();
+        }
     }
-}
 
 
-// === Pomocné funkce ===
-function getFormValue($inputName, $default = '')
-{
-    if (isset($_POST[$inputName])) {
-        return $_POST[$inputName];
+    // === Pomocné funkce ===
+    function getFormValue($inputName, $default = '')
+    {
+        if (isset($_POST[$inputName])) {
+            return $_POST[$inputName];
+        }
+        return $default;
     }
-    return $default;
-}
 
 
-function isFormSent($formName)
-{
-    return getFormValue('action') === $formName;
-}
-
+    function isFormSent($formName)
+    {
+        return getFormValue('action') === $formName;
+    }
 
 ?>
 <!DOCTYPE html>
