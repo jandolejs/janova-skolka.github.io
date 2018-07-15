@@ -1,6 +1,6 @@
 <?php
 
-namespace Lesson18;
+namespace Lesson19;
 
 require_once __DIR__ . '/libs/Escape.php';
 require_once __DIR__ . '/libs/Validate.php';
@@ -61,7 +61,7 @@ function isFilled($value)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
 
-    <title>Janova školka HTML - Lekce 18</title>
+    <title>Janova školka HTML - Lekce 19</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
@@ -70,8 +70,8 @@ function isFilled($value)
 <div class="container">
     <div class="jumbotron">
         <p><a href="../">« Další úkoly</a></p>
-        <h1>Lekce 18</h1>
-        <p><strong>OOP (instance)</strong></p>
+        <h1>Lekce 19</h1>
+        <p><strong>OOP (constructor, getter)</strong></p>
 
         <p>Tvůj úkol je:</p>
         <ul>
