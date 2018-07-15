@@ -2,6 +2,9 @@
 
     namespace Lesson17;
 
+    require_once(__DIR__ . '/libs/Escape.php');
+    require_once(__DIR__ . '/libs/Validate.php');
+
     $isFormValid = false;
     $errorCaught = null;
 
@@ -9,13 +12,13 @@
     if (isFormSent('registration-form')) {
         try {
                 $name = getFormValue('name');
-                validateRequired($name, 'Jméno') && validateName($name, 'Jméno');
+                Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
 
                 $phone = getFormValue('phone');
-                validateRequired($phone, 'Telefon') && validatePhone($phone, 'Telefon');
+                Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
 
                 $email = getFormValue("email");
-                isFilled($email) && validateEmail($email, "Email");
+                isFilled($email) && Validate::email($email, "Email");
 
                 $isFormValid = true;
         } catch (\Exception $errorCaught) {
@@ -25,12 +28,6 @@
 
 
     // === Pomocné funkce ===
-    function escapeHtml($text)
-    {
-        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-    }
-
-
     function getFormValue($inputName, $default = '')
     {
         if (isset($_POST[$inputName])) {
@@ -43,45 +40,6 @@
     function isFormSent($formName)
     {
         return getFormValue('action') === $formName;
-    }
-
-
-    function validateRequired($value, $title)
-    {
-        $isValid = ($value !== '');
-        if (!$isValid) {
-            throw new \Exception("Pole $title není vyplněno, prosím, vyplňte jej.");
-        }
-        return $isValid;
-    }
-
-
-    function validateName($value, $title)
-    {
-        $isValid = !preg_match('/\d/', $value);
-        if (!$isValid) {
-            throw new \Exception("Pole $title nesmí obsahovat číslo.");
-        }
-        return $isValid;
-    }
-
-    function validatePhone($value, $title)
-    {
-        $isValid = preg_match('/^ *(\d *){9}$/', $value);
-        if (!$isValid) {
-            throw new \Exception("Pole $title musí obsahovat pouze 9 číslic (mezery jsou povoleny).");
-        }
-        return $isValid;
-    }
-
-
-    function validateEmail($value, $title)
-    {
-        $isValid = filter_var($value, FILTER_VALIDATE_EMAIL);
-        if (!$isValid) {
-            throw new \Exception("$title byl vyplněn ale je neplatný.");
-        }
-        return $isValid;
     }
 
 
@@ -121,7 +79,7 @@
                     <ul>
                         <li>všechny validační funkce (<code>validate*</code>) do třídy <code>Validate</code>,</li>
                         <li>všechny escapovací funkce (<code>escape*</code>) do třídy <code>Escape</code>,</li>
-                        <li>upravit jejich název tak, aby se neduplikoval název (<code>Validate::name()</code> místo <code>Validate::validateName()</code>),</li>
+                        <li>upravit jejich název tak, aby se neduplikoval název (<code>Validate::name()</code> místo <code>Validate::Validate::name()</code>),</li>
                         <li>soubor s třídou se vždy bude jmenovat stejně jako třída (včetně velikosti písmen),</li>
                         <li>tyto soubory budou v podsložce <code>libs/</code>.</li>
                     </ul>
@@ -142,20 +100,20 @@
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                            <?php echo escapeHtml($_POST['name']); ?>
+                            <?php echo Escape::html($_POST['name']); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                            <?php echo escapeHtml($_POST['phone']); ?>
+                            <?php echo Escape::html($_POST['phone']); ?>
                             </td>
                         </tr>
                         <?php if(isFilled(getFormValue("email"))): ?>
                         <tr>
                             <th>Email:</th>
                             <td>
-                            <?php echo escapeHtml($_POST['email']); ?>
+                            <?php echo Escape::html($_POST['email']); ?>
                             </td>
                         </tr>
                         <?php endif; ?>
@@ -177,15 +135,15 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label for="name">Jméno *</label>
-                    <input type="text" class="form-control" name="name" id="name" value="<?php echo escapeHtml(getFormValue('name')); ?>">
+                    <input type="text" class="form-control" name="name" id="name" value="<?php echo Escape::html(getFormValue('name')); ?>">
                 </div>
                 <div class="form-group">
                     <label for="phone">Telefon *</label>
-                    <input type="text" class="form-control" name="phone" id="phone" value="<?php echo escapeHtml(getFormValue('phone')); ?>">
+                    <input type="text" class="form-control" name="phone" id="phone" value="<?php echo Escape::html(getFormValue('phone')); ?>">
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="text" class="form-control" name="email" id="email" value="<?php echo escapeHtml(getFormValue('email')); ?>">
+                    <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(getFormValue('email')); ?>">
                 </div>
                 <input type="hidden" name="action" value="registration-form">
                 <input type="submit" name="submit" value="Odeslat" class="btn btn-primary">
