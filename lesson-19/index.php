@@ -11,20 +11,12 @@ $errorCaught = null;
 
 //form send
 if (isFormSent('registration-form')) {
+    $name = getFormValue('name');
+    $phone = getFormValue('phone');
+    $email = getFormValue('email');
+
     try {
-        $name = getFormValue('name');
-        Validate::required($name, 'Jméno') && Validate::name($name, 'Jméno');
-
-        $phone = getFormValue('phone');
-        Validate::required($phone, 'Telefon') && Validate::phone($phone, 'Telefon');
-
-        $email = getFormValue('email');
-        isFilled($email) && Validate::email($email, 'Email');
-
-        $user = new User();
-        $user->name = $name;
-        $user->phone = $phone;
-        $user->email = $email;
+        $user = new User($name, $phone, $email);
     } catch (\Exception $errorCaught) {
         $errorCaught = $errorCaught->getMessage();
     }
@@ -46,11 +38,6 @@ function isFormSent($formName)
     return getFormValue('action') === $formName;
 }
 
-
-function isFilled($value)
-{
-    return $value !== '';
-}
 
 ?>
 <!DOCTYPE html>
@@ -97,20 +84,20 @@ function isFilled($value)
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                                <?php echo Escape::html($user->name); ?>
+                                <?php echo Escape::html($user->getName()); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                                <?php echo Escape::html($user->phone); ?>
+                                <?php echo Escape::html($user->getPhone()); ?>
                             </td>
                         </tr>
-                        <?php if(isFilled($user->email)): ?>
+                        <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->email); ?>
+                                    <?php echo Escape::html($user->getEmail()); ?>
                                 </td>
                             </tr>
                         <?php endif; ?>
