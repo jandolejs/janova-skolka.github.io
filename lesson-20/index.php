@@ -17,27 +17,30 @@
     // Pro odeslání e-mailu je povinné vyplnění: jména, e-mailu a zprávy
     // Telefon není povinný – polud jej ale chceš poslat, přidej do parametrů 'phone'
 
-//    $mainParameters = [
-//        'name' => 'Jan Dolejš',
-//        'email' => 'janova-skolka@googlegroups.com',
-//        'message' => 'Toto je DEMO zpráva...',
-//    ];
 
-//    Mail\Mailer::sendMail($mainParameters);
 
     $user = null;
     $errorCaught = null;
+    $mainParameters = [
+       'name' => 'Jan Dolejš',
+       'email' => 'janova-skolka@googlegroups.com',
+       'message' => 'Toto je DEMO zpráva...',
+    ];
 
     //form send
     if (isFormSent('registration-form')) {
         try {
+
             $name  = new Name(getFormValue('name'));
+
             $message = new Message(getFormValue('message'));
+
             if(isFilled(getFormValue('phone'))) {
                 $phone = new Phone(getFormValue('phone'));
             } else {
                 $phone = null;
             }
+
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
             } else {
@@ -45,6 +48,9 @@
             }
 
             $user = new User($name, $phone, $email, $message);
+
+            Mail\Mailer::sendMail($mainParameters);
+
         } catch (\Exception $errorCaught) {
             $errorCaught = $errorCaught->getMessage();
         }
@@ -130,12 +136,12 @@
                                 </td>
                             </tr>
                         <?php endif; ?>
-                            <tr>
-                                <th>Zpráva:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getMessage()); ?>
-                                </td>
-                            </tr>
+                        <tr>
+                            <th>Zpráva:</th>
+                            <td>
+                                <?php echo Escape::html($user->getMessage()); ?>
+                            </td>
+                        </tr>
                     </table>
                 <?php else: ?>
                     <div class="alert alert-info" role="alert">
@@ -165,7 +171,7 @@
                 <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(getFormValue('email')); ?>">
             </div>
             <div class="form-group">
-                <label for="email">Zpráva</label>
+                <label for="message">Zpráva</label>
                 <textarea rows="5" type="text" class="form-control" name="message" id="message"><?php echo Escape::html(getFormValue('message')); ?></textarea>
             </div>
             <input type="hidden" name="action" value="registration-form">
