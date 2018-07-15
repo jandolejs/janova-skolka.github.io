@@ -52,8 +52,8 @@ class Mailer
 
         if ($code !== 200) {
             $message = $content['error'];
-            if (isset($message['tip'])) {
-                $message .= " ({$message['tip']})";
+            if (isset($content['tip'])) {
+                $message .= " ({$content['tip']})";
             }
             throw new MailerException($message, $code);
         }
