@@ -31,8 +31,9 @@
     if (isFormSent('registration-form')) {
         try {
             $name  = new Name(getFormValue('name'));
-            $phone = new Phone(getFormValue('phone'));
-
+            if(isFilled(getFormValue('phone'))) {
+                $phone = new Phone(getFormValue('phone'));
+            }
             if(isFilled(getFormValue('email'))) {
                 $email = new Email(getFormValue('email'));
             } else {
@@ -110,11 +111,13 @@
                             </td>
                         </tr>
                         <tr>
+                        <?php if($user->hasPhone()): ?>
                             <th>Telefon:</th>
                             <td>
                                 <?php echo Escape::html($user->getPhone()); ?>
                             </td>
                         </tr>
+                        <?php endif; ?>
                         <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
@@ -144,7 +147,7 @@
                 <input type="text" class="form-control" name="name" id="name" value="<?php echo Escape::html(getFormValue('name')); ?>">
             </div>
             <div class="form-group">
-                <label for="phone">Telefon *</label>
+                <label for="phone">Telefon</label>
                 <input type="text" class="form-control" name="phone" id="phone" value="<?php echo Escape::html(getFormValue('phone')); ?>">
             </div>
             <div class="form-group">

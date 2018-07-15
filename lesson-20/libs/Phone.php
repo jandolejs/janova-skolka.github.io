@@ -8,6 +8,6 @@
     {
         function validate($content)
         {
-            Validate::required($content, 'Telefon') && Validate::phone($content, 'Telefon');
+            Validate::phone($content, 'Telefon');
         }
     }

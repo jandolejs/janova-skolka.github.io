@@ -10,7 +10,7 @@
         private $phone;
         private $email;
 
-        function __construct(Name $name, Phone $phone, ?Email $email)
+        function __construct(Name $name, ?Phone $phone, ?Email $email)
         {
             $this->name = $name;
             $this->phone = $phone;
@@ -35,6 +35,11 @@
         function hasEmail()
         {
             return $this->email instanceof Email;
+        }
+
+        function hasPhone()
+        {
+            return $this->phone instanceof Phone;
         }
 
     }
