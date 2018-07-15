@@ -4,17 +4,10 @@
 
     require_once __DIR__ . '/Validate.php';
 
-    class Phone
+    class Phone extends ContentType
     {
-        private $content;
-
-        function __construct($content)
+        function validate($content)
         {
             Validate::required($content, 'Telefon') && Validate::phone($content, 'Telefon');
-            $this->content = $content;
-        }
-
-        function getContent() {
-            return $this->content;
         }
     }

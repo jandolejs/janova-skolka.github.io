@@ -5,6 +5,7 @@
     require_once __DIR__ . '/libs/Escape.php';
     require_once __DIR__ . '/libs/Validate.php';
     require_once __DIR__ . '/libs/User.php';
+    require_once __DIR__ . '/libs/ContentType.php';
     require_once __DIR__ . '/libs/Name.php';
     require_once __DIR__ . '/libs/Phone.php';
     require_once __DIR__ . '/libs/Email.php';
@@ -95,20 +96,20 @@
                         <tr>
                             <th>Jméno:</th>
                             <td>
-                                <?php echo Escape::html($user->getName()->getContent()); ?>
+                                <?php echo Escape::html($user->getName()); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Telefon:</th>
                             <td>
-                                <?php echo Escape::html($user->getPhone()->getContent()); ?>
+                                <?php echo Escape::html($user->getPhone()); ?>
                             </td>
                         </tr>
                         <?php if($user->hasEmail()): ?>
                             <tr>
                                 <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->getEmail()->getContent()); ?>
+                                    <?php echo Escape::html($user->getEmail()); ?>
                                 </td>
                             </tr>
                         <?php endif; ?>

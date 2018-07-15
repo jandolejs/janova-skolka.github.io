@@ -4,17 +4,10 @@
 
     require_once __DIR__ . '/Validate.php';
 
-    class Email
+    class Email extends ContentType
     {
-    	private $content;
-
-    	function __construct($content)
+        function validate($content)
         {
             Validate::email($content, 'Email');
-            $this->content = $content;
-        }
-
-        function getContent() {
-        	return $this->content;
         }
     }
