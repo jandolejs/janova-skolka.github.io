@@ -1,5 +1,11 @@
 {
     "require": {
-        "nette/database": "^2.4"
+        "php": ">=7.2",
+        "nette/database": "^2.4",
+        "aws/aws-sdk-php": "^3.63"
+    },
+    "minimal-stability": "dev",
+    "autoload": {
+        "classmap": ["libs/"]
     }
 }
