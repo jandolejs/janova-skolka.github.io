@@ -3,7 +3,7 @@
     namespace Lesson16;
 
     $isFormValid = false;
-    $errorCaught = "";
+    $errorCaught = null;
 
     //form send
     if (isFormSent('registration-form')) {
@@ -162,7 +162,7 @@
                 </div>
             </div>
             <h3>Formulář</h3>
-            <?php if($errorCaught != ""): ?>
+            <?php if($errorCaught !== null): ?>
                 <div class="alert alert-danger" role="alert">
                     <?php echo $errorCaught; ?>
                 </div>
