@@ -143,9 +143,13 @@
                             </td>
                         </tr>
                     </table>
+                <?php elseif(!isFormSent('registration-form')): ?>
+                    <div class="alert alert-info" role="alert">
+                        Formulář ještě nebyl odeslán
+                    </div>
                 <?php else: ?>
                     <div class="alert alert-info" role="alert">
-                        Formulář nebyl odeslán
+                        Formulář se neodeslal
                     </div>
                 <?php endif; ?>
             </div>
