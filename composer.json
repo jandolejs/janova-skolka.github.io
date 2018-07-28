@@ -1,5 +1,7 @@
 {
     "require": {
+        "ext-curl":"*",
+        "ext-json":"*",
         "nette/robot-loader": "^3.0"
     }
 }
