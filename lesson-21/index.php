@@ -42,6 +42,7 @@
             }
 
             $user = new User($name, $phone, $email, $message);
+            writeToFile($name, $formData);
 
         } catch (Mail\MailerException $e) {
             $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
@@ -50,9 +51,6 @@
         }
     }
 
-    if ($user instanceof User) {
-        writeToFile($name, $formData);
-    }
 
     // === Pomocné funkce ===
     function writeToFile($name, $formData) {
