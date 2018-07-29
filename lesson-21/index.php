@@ -50,8 +50,29 @@
         }
     }
 
+    if ($user instanceof User) {
+        writeToFile($name, $formData);
+    }
 
     // === Pomocné funkce ===
+    function writeToFile($name, $formData) {
+
+        $numToEnd = 1;
+        $fileNameOrigin = $name;
+        $outputFolder = "output";
+        $dataToWrite = json_encode($formData);
+
+        do {
+            $fileName = $fileNameOrigin.$numToEnd;
+            $outputPatch = "$outputFolder/$fileName.json";
+            $numToEnd++;
+        } while (file_exists($outputPatch));
+
+        $outputFile = fopen($outputPatch, "wb");
+        fwrite($outputFile, $dataToWrite);
+        fclose($outputFile);
+    }
+
     function getFormValue($inputName, $default = '')
     {
         if (isset($_POST[$inputName])) {
