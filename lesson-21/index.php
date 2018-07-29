@@ -42,7 +42,7 @@
             }
 
             $user = new User($name, $phone, $email, $message);
-            writeToFile($name, $formData);
+            $fileCreated = new Storage($name, $formData);
 
         } catch (Mail\MailerException $e) {
             $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
@@ -53,29 +53,6 @@
 
 
     // === Pomocné funkce ===
-    function writeToFile($name, $formData) {
-
-        $dataToWrite = json_encode($formData);
-        $outputFolder = "output";
-
-        $fileName = getNewFileName($name, $outputFolder);
-        $outputPatch = "$outputFolder/$fileName.json";
-        $outputFile = fopen($outputPatch, "wb");
-
-        fwrite($outputFile, $dataToWrite);
-        fclose($outputFile);
-    }
-
-    function getNewFileName($name, $outputFolder) {
-
-        do {
-            $fileName = $name."_".rand(1000,9999);
-            $outputPatch = "$outputFolder/$fileName.json";
-        } while (file_exists($outputPatch));
-
-        return $fileName;
-    }
-
     function getFormValue($inputName, $default = '')
     {
         if (isset($_POST[$inputName])) {
