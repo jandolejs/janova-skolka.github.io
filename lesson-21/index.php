@@ -55,20 +55,25 @@
     // === Pomocné funkce ===
     function writeToFile($name, $formData) {
 
-        $numToEnd = 1;
-        $fileNameOrigin = $name;
-        $outputFolder = "output";
         $dataToWrite = json_encode($formData);
+        $outputFolder = "output";
 
-        do {
-            $fileName = $fileNameOrigin."_".$numToEnd;
-            $outputPatch = "$outputFolder/$fileName.json";
-            $numToEnd++;
-        } while (file_exists($outputPatch));
-
+        $fileName = getNewFileName($name, $outputFolder);
+        $outputPatch = "$outputFolder/$fileName.json";
         $outputFile = fopen($outputPatch, "wb");
+
         fwrite($outputFile, $dataToWrite);
         fclose($outputFile);
+    }
+
+    function getNewFileName($name, $outputFolder) {
+
+        do {
+            $fileName = $name."_".rand(1000,9999);
+            $outputPatch = "$outputFolder/$fileName.json";
+        } while (file_exists($outputPatch));
+
+        return $fileName;
     }
 
     function getFormValue($inputName, $default = '')
