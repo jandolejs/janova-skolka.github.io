@@ -63,7 +63,7 @@
         $dataToWrite = json_encode($formData);
 
         do {
-            $fileName = $fileNameOrigin.$numToEnd;
+            $fileName = $fileNameOrigin."_".$numToEnd;
             $outputPatch = "$outputFolder/$fileName.json";
             $numToEnd++;
         } while (file_exists($outputPatch));
