@@ -44,6 +44,8 @@
             $user = new User($name, $phone, $email, $message);
             Storage::save($name, $formData);
 
+        } catch (StorageException $e) {
+            $errorCaught = $e->getMessage();
         } catch (Mail\MailerException $e) {
             $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
         } catch (\Exception $e) {

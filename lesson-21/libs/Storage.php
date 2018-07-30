@@ -14,7 +14,9 @@
 
             $name = Storage::getNewFileName($name, $outputFolder);
             $outputPatch = __DIR__."/../$outputFolder/$name.json";
-            $outputFile = fopen($outputPatch, "wb");
+            if(!$outputFile = fopen($outputPatch, "wb")) {
+                throw new StorageException("Soubor s údaji nebylo možné uložit!");
+            }
 
             fwrite($outputFile, $dataToWrite);
             fclose($outputFile);
