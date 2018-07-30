@@ -1,17 +1,19 @@
 <?php
 
     namespace Lesson21;
+    use Nette\Utils\Strings;
 
     class Storage
     {
         static function save($name, $formData)
         {
 
+            $name = Strings::webalize($name);
             $dataToWrite = json_encode($formData);
             $outputFolder = "output";
 
             do {
-                $fileName = $name."_".rand(1000,9999);
+                $fileName = $name."-".rand(1000,9999);
                 $outputPatch = "$outputFolder/$fileName.json";
             } while (file_exists($outputPatch));
 
