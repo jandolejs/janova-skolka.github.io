@@ -1,6 +1,6 @@
 <?php
 
-    namespace Lesson21\Storage;
+    namespace Lesson21;
     use Nette\Utils\Strings;
 
     class Storage
@@ -11,7 +11,7 @@
 
             $formData['sendTime'] = date('y-m-d--h-m');
             $dataToWrite = json_encode($formData);
-            $outputFolder = __DIR__."/../output";
+            $outputFolder = __DIR__."/../../output";
 
             if (file_exists($outputFolder)) {
 

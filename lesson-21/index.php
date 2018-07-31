@@ -46,8 +46,8 @@
 
         } catch (Mail\MailerException $e) {
             $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
-        } catch (Storage\StorageException $e) {
-            $storageSaveError = $e->getMessage();
+        } catch (StorageException $e) {
+            $errorCaught = $e->getMessage();
         } catch (\Exception $e) {
             $errorCaught = $e->getMessage();
         }
@@ -151,11 +151,6 @@
         <?php if($errorCaught !== null): ?>
             <div class="alert alert-danger" role="alert">
                 <?php echo $errorCaught; ?>
-            </div>
-        <?php endif; ?>
-        <?php if($storageSaveError !== null): ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $storageSaveError; ?>
             </div>
         <?php endif; ?>
 

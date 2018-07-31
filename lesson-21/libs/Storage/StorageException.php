@@ -1,6 +1,6 @@
 <?php
 
-namespace Lesson21\Storage;
+namespace Lesson21;
 
 class StorageException extends \Exception
 {
