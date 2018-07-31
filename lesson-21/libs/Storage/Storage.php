@@ -1,6 +1,6 @@
 <?php
 
-    namespace Lesson21;
+    namespace Lesson21\Storage;
     use Nette\Utils\Strings;
 
     class Storage
@@ -11,16 +11,19 @@
 
             $formData['sendTime'] = date('y-m-d--h-m');
             $dataToWrite = json_encode($formData);
-            $outputFolder = "output";
+            $outputFolder = __DIR__."/../output";
 
-            $name = Storage::getNewFileName($name, $outputFolder);
-            $outputPatch = __DIR__."/../$outputFolder/$name.json";
-            if(!$outputFile = fopen($outputPatch, "wb")) {
-                throw new StorageException("Soubor s údaji nebylo možné uložit!");
+            if (file_exists($outputFolder)) {
+
+                $name = Storage::getNewFileName($name, $outputFolder);
+                $outputFile = $outputFolder.'/'.$name.'.json';
+
+                $outputFile = fopen($outputFile, "wb");
+                fwrite($outputFile, $dataToWrite);
+                fclose($outputFile);
+            } else {
+                throw new StorageException("Soubor s údaji nelze uložit!");
             }
-
-            fwrite($outputFile, $dataToWrite);
-            fclose($outputFile);
         }
 
         static function getNewFileName($name, $outputFolder)
