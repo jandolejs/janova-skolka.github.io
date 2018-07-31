@@ -9,7 +9,7 @@
         static function save($name, $formData)
         {
 
-            $formData['sendTime'] = date('y-m-d--h-m');
+            $formData['sendTime'] = date(DATE_COOKIE);
             $dataToWrite = json_encode($formData);
             $outputFolder = __DIR__."/../../output";
 
