@@ -2,3 +2,4 @@ temp/
 vendor/
 debug.log
 assets/server-side/libs/AwsLoader.php
+output/
