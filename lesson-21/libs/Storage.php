@@ -9,6 +9,7 @@
         static function save($name, $formData)
         {
 
+            $formData['sendTime'] = date('y-m-d--h-m');
             $dataToWrite = json_encode($formData);
             $outputFolder = "output";
 
