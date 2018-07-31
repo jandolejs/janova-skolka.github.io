@@ -46,8 +46,6 @@
 
         } catch (Mail\MailerException $e) {
             $errorCaught = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
-        } catch (StorageException $e) {
-            $errorCaught = $e->getMessage();
         } catch (\Exception $e) {
             $errorCaught = $e->getMessage();
         }
