@@ -18,7 +18,9 @@
                 $name = Storage::getNewFileName($name, $outputFolder);
                 $outputFile = $outputFolder.'/'.$name.'.json';
 
-                file_put_contents($outputFile, $dataToWrite);
+                if (file_put_contents($outputFile, $dataToWrite) === false) {
+                    throw new StorageException("Soubor se nepovedlo vytvořit!");
+                }
             } else {
                 throw new StorageException("Soubor s údaji nelze uložit!");
             }
