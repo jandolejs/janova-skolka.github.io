@@ -9,7 +9,7 @@
         static function save($name, $formData)
         {
 
-            $formData['sendTime'] = date(DATE_COOKIE);
+            $formData['sendTime'] = date(DATE_ATOM);
             $dataToWrite = json_encode($formData);
             $outputFolder = __DIR__."/../../output";
 
@@ -18,9 +18,7 @@
                 $name = Storage::getNewFileName($name, $outputFolder);
                 $outputFile = $outputFolder.'/'.$name.'.json';
 
-                $outputFile = fopen($outputFile, "wb");
-                fwrite($outputFile, $dataToWrite);
-                fclose($outputFile);
+                file_put_contents($outputFile, $dataToWrite);
             } else {
                 throw new StorageException("Soubor s údaji nelze uložit!");
             }
