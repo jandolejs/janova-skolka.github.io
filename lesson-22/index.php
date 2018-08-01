@@ -46,8 +46,8 @@ if (Helpers::isFormSent('registration-form')) {
             $email = null;
         }
 
-        $user = new User($name, $phone, $email, $message);
         Storage::save($name, $formData);
+        $user = new User($name, $phone, $email, $message);
 
     } catch (Mail\MailerException $e) {
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();

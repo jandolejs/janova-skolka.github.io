@@ -15,7 +15,7 @@ class Storage
 
         $filename = self::getNewFileName($name);
 
-        $isFileSaved = file_put_contents($filename, $dataToWrite);
+        $isFileSaved = @file_put_contents($filePatch, $dataToWrite);
 
         if ($isFileSaved === false) {
             throw new StorageException("Soubor $filename se nepodařilo uložit");
