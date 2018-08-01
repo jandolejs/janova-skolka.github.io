@@ -8,6 +8,13 @@ use Nette\Utils\Strings;
 class Storage
 {
 
+    private $path;
+
+    function __construct(Path $path)
+    {
+        $this->path = $path;
+    }
+
     static function save($name, $formData)
     {
         $formData['date'] = date(DATE_ATOM);
@@ -25,7 +32,7 @@ class Storage
 
     static function getNewFilePath($name)
     {
-        $outputFolder = $path;
+        $outputFolder = $this->path;
 
         $date = date('Y-m-d-H-i-s');
         $name = self::sanitizeName($name);

@@ -16,6 +16,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $user = null;
 $error = null;
 $formData = [];
+$storage = new Storage(__DIR__.'/output');
 
 
 
@@ -46,7 +47,7 @@ if (Helpers::isFormSent('registration-form')) {
             $email = null;
         }
 
-        Storage::save($name, $formData);
+        $storage->save($name, $formData);
         $user = new User($name, $phone, $email, $message);
 
     } catch (Mail\MailerException $e) {
