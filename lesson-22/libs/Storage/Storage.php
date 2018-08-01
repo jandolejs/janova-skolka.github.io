@@ -10,9 +10,9 @@ class Storage
 
     private $path;
 
-    function __construct(Path $path)
+    function __construct($_path)
     {
-        $this->path = $path;
+        $path = $_path;
     }
 
     static function save($name, $formData)
@@ -32,7 +32,7 @@ class Storage
 
     static function getNewFilePath($name)
     {
-        $outputFolder = $this->path;
+        $outputFolder = $path;
 
         $date = date('Y-m-d-H-i-s');
         $name = self::sanitizeName($name);
