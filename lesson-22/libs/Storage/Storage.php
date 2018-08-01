@@ -13,19 +13,19 @@ class Storage
         $formData['date'] = date(DATE_ATOM);
         $dataToWrite = json_encode($formData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        $filename = self::getNewFileName($name);
+        $filePath = self::getNewFilePath($name);
 
-        $isFileSaved = @file_put_contents($filePatch, $dataToWrite);
+        $isFileSaved = @file_put_contents($filePath, $dataToWrite);
 
         if ($isFileSaved === false) {
-            throw new StorageException("Soubor $filename se nepodařilo uložit");
+            throw new StorageException("Soubor $filePath se nepodařilo uložit");
         }
     }
 
 
-    static function getNewFileName($name)
+    static function getNewFilePath($name)
     {
-        $outputFolder = __DIR__ . '/../../output';
+        $outputFolder = $path;
 
         $date = date('Y-m-d-H-i-s');
         $name = self::sanitizeName($name);
