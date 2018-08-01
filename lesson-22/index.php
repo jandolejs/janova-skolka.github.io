@@ -16,6 +16,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $user = null;
 $error = null;
 $formData = [];
+$storage = new Storage(__DIR__.'/output');
 
 
 
@@ -46,8 +47,8 @@ if (Helpers::isFormSent('registration-form')) {
             $email = null;
         }
 
+        $storage->save($name, $formData);
         $user = new User($name, $phone, $email, $message);
-        Storage::save($name, $formData);
 
     } catch (Mail\MailerException $e) {
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
