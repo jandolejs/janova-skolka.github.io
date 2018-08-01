@@ -25,7 +25,7 @@ class Storage
         $isFileSaved = @file_put_contents($filePath, $dataToWrite);
 
         if ($isFileSaved === false) {
-            throw new StorageException("Soubor $filePath se nepodařilo uložit");
+            throw new StorageException("Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz");
         }
     }
 
