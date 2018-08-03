@@ -48,7 +48,7 @@ if (Helpers::isFormSent('registration-form')) {
         $user = new User($name, $phone, $email, $message);
 
     } catch (Mail\MailerException $e) {
-        Debugger::log("Email not sent: " . $e);
+        Debugger::log('email_not_sent="' . $e . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
     } catch (\Exception $e) {
         $error = $e->getMessage();
