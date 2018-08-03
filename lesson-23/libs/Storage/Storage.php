@@ -4,6 +4,7 @@ namespace Lesson23;
 
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
+use Tracy\Debugger;
 
 class Storage
 {
@@ -25,6 +26,7 @@ class Storage
         $isFileSaved = @file_put_contents($filePath, $dataToWrite);
 
         if ($isFileSaved === false) {
+            Debugger::log("File not saved");
             throw new StorageException("Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz");
         }
     }
