@@ -1,6 +1,7 @@
 <?php
 
 namespace Lesson23;
+use Tracy\Debugger;
 
 // ===== Autoloader knihoven ====================
 
@@ -17,6 +18,7 @@ $user = null;
 $error = null;
 $formData = [];
 $storage = new Storage(__DIR__.'/output');
+Debugger::enable(Debugger::DETECT, __DIR__ . '/log');
 
 
 
