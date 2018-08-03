@@ -1,6 +1,7 @@
 <?php
 
 namespace Lesson23;
+
 use Tracy\Debugger;
 
 // ===== Autoloader knihoven ====================
@@ -9,19 +10,13 @@ require __DIR__ . '/../vendor/autoload.php';
 (new \Nette\Loaders\RobotLoader)->addDirectory(__DIR__ . '/libs')
     ->setTempDirectory(__DIR__ . '/../temp/cache')->register();
 
-
-
-
 // ===== Inicializace ===========================
 
 $user = null;
 $error = null;
 $formData = [];
-$storage = new Storage(__DIR__.'/output');
+$storage = new Storage(__DIR__ . '/output');
 Debugger::enable(Debugger::DETECT, __DIR__ . '/log');
-
-
-
 
 // ===== Aplikace ===============================
 
