@@ -8,7 +8,7 @@ class Validate
     {
         $isValid = filter_var($value, FILTER_VALIDATE_EMAIL);
         if (!$isValid) {
-            throw new \Exception('Zadali jste neplatný e-mail, prosím zkontrolujte zadání a opravte jej.');
+            throw new ValidateException('Zadali jste neplatný e-mail, prosím zkontrolujte zadání a opravte jej.');
         }
         return $isValid;
     }
@@ -18,7 +18,7 @@ class Validate
     {
         $isValid = !preg_match('/\d/', $value);
         if (!$isValid) {
-            throw new \Exception('Ve jménu nesmí být číslice, prosím upravte jej.');
+            throw new ValidateException('Ve jménu nesmí být číslice, prosím upravte jej.');
         }
         return $isValid;
     }
@@ -28,7 +28,7 @@ class Validate
     {
         $isValid = preg_match('/^ *(\d *){9}$/', $value);
         if (!$isValid) {
-            throw new \Exception('Telefon by musí obsahovat právě 9 číslic, prosím opravte jej');
+            throw new ValidateException('Telefon by musí obsahovat právě 9 číslic, prosím opravte jej');
         }
         return $isValid;
     }
@@ -38,7 +38,7 @@ class Validate
     {
         $isValid = ($value !== '');
         if (!$isValid) {
-            throw new \Exception('Nejsou vyplněna všechna povinná pole, prosím vyplňte je');
+            throw new ValidateException('Nejsou vyplněna všechna povinná pole, prosím vyplňte je');
         }
         return $isValid;
     }

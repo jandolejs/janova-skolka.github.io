@@ -2,24 +2,22 @@
 
 namespace Lesson23;
 
+use Tracy\Debugger;
+use Tracy\ILogger;
+
 // ===== Autoloader knihoven ====================
 
 require __DIR__ . '/../vendor/autoload.php';
 (new \Nette\Loaders\RobotLoader)->addDirectory(__DIR__ . '/libs')
     ->setTempDirectory(__DIR__ . '/../temp/cache')->register();
 
-
-
-
 // ===== Inicializace ===========================
 
 $user = null;
 $error = null;
 $formData = [];
-$storage = new Storage(__DIR__.'/output');
-
-
-
+$storage = new Storage(__DIR__ . '/output');
+Debugger::enable(Debugger::DETECT, __DIR__ . '/log');
 
 // ===== Aplikace ===============================
 
@@ -51,9 +49,13 @@ if (Helpers::isFormSent('registration-form')) {
         $user = new User($name, $phone, $email, $message);
 
     } catch (Mail\MailerException $e) {
+        Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
-    } catch (\Exception $e) {
+    } catch (ValidateException $e) {
         $error = $e->getMessage();
+    } catch (\Exception $e) {
+        Debugger::log($e, ILogger::ERROR);
+        $error = "Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz";
     }
 }
 ?>
