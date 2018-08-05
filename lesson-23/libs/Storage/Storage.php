@@ -26,8 +26,7 @@ class Storage
         $isFileSaved = @file_put_contents($filePath, $dataToWrite);
 
         if ($isFileSaved === false) {
-            Debugger::log('file_not_saved="dontKnowWhy"');
-            throw new StorageException("Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz");
+            throw new StorageException('Unable to save file ' . $filePath);
         }
     }
 

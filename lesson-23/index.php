@@ -3,6 +3,7 @@
 namespace Lesson23;
 
 use Tracy\Debugger;
+use Tracy\ILogger;
 
 // ===== Autoloader knihoven ====================
 
@@ -48,10 +49,13 @@ if (Helpers::isFormSent('registration-form')) {
         $user = new User($name, $phone, $email, $message);
 
     } catch (Mail\MailerException $e) {
-        Debugger::log('email_not_sent="' . $e . '"');
+        Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
-    } catch (\Exception $e) {
+    } catch (ValidateException $e) {
         $error = $e->getMessage();
+    } catch (\Exception $e) {
+        Debugger::log($e, ILogger::ERROR);
+        $error = "Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz";
     }
 }
 ?>
