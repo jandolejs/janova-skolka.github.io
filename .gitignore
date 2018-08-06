@@ -1,5 +1,7 @@
-temp/
-vendor/
-debug.log
-assets/server-side/libs/AwsLoader.php
-output/
+/temp/
+/vendor/
+/assets/server-side/libs/AwsLoader.php
+/output/*
+!/output/.gitkeep
+/log/*
+!/log/.gitkeep

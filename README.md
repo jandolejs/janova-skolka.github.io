@@ -1,4 +1,4 @@
-# Janova školka HTML + JS
+# Janova školka PHP
 
 ## Postup vykonávání práce
 1. Vytvoř si Fork repozitáře,
@@ -8,5 +8,3 @@
 5. Vytvoř si novou branche (ideálně s názvem odpovídajícím názvu úkolu),
 6. Commit&Pushni do svého repa,
 7. Vytvoř PullRequest
-
-Veřejná stránka školky: https://janova-skolka.github.io
