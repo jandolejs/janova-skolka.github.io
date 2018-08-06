@@ -24,6 +24,16 @@ class Validate
     }
 
 
+    static function username($value)
+    {
+        $isValid = preg_match('/^[.a-z0-9]+\z/i', $value);
+        if (!$isValid) {
+            throw new ValidateException('Přihlašovací jméno smí obsahovat jen latinská písmena bez diakritiky, čísla a tečky');
+        }
+        return $isValid;
+    }
+
+
     static function phone($value)
     {
         $isValid = preg_match('/^ *(\d *){9}$/', $value);

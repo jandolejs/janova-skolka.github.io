@@ -43,7 +43,23 @@ class Validate
     /**
      * @param $value
      * @param $title
-     * @return false|int
+     * @return bool
+     * @throws ValidatorException
+     */
+    public static function username($value, $title)
+    {
+        $isValid = preg_match('/^[.a-z0-9]+\z/i', $value);
+        if (!$isValid) {
+            throw new ValidatorException("Pole $title smí obsahovat jen latinská písmena bez diakritiky, čísla a tečky ($value)");
+        }
+        return $isValid;
+    }
+
+
+    /**
+     * @param $value
+     * @param $title
+     * @return bool
      * @throws ValidatorException
      */
     public static function phone($value, $title)

@@ -28,29 +28,25 @@ $storage = new Storage(__DIR__ . '/../output');
 
 if (Helpers::isFormSent('registration-form')) {
     try {
-        $name = new Content\Name(Helpers::getFormValue('name'));
-        $formData['name'] = $name->getContent();
+        $name = new Content\Name($formData['name'] = Helpers::getFormValue('name'));
 
-        $message = new Content\Message(Helpers::getFormValue('message'));
-        $formData['message'] = $message->getContent();
+        $username = new Content\Username($formData['username'] = Helpers::getFormValue('username'));
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
-            $phone = new Content\Phone(Helpers::getFormValue('phone'));
-            $formData['phone'] = $phone->getContent();
+            $phone = new Content\Phone($formData['phone'] = Helpers::getFormValue('phone'));
         } else {
             $phone = null;
         }
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
-            $email = new Content\Email(Helpers::getFormValue('email'));
-            $formData['email'] = $email->getContent();
+            $email = new Content\Email($formData['email'] = Helpers::getFormValue('email'));
             Mail\Mailer::sendMail($formData);
         } else {
             $email = null;
         }
 
         $storage->save($name, $formData);
-        $user = new User($name, $phone, $email, $message);
+        $user = new User($username, $name, $phone, $email);
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
@@ -87,10 +83,16 @@ if (Helpers::isFormSent('registration-form')) {
             <div class="row">
                 <div class="col-sm-12">
                     <div class="alert alert-success" role="alert">
-                        Formulář úspěšně odeslán
+                        Registrace byla úspěšně dokončena.
                     </div>
                     <h3>Data z formuláře</h3>
                         <table class="table table-bordered">
+                            <tr>
+                                <th>Uživatelské jméno:</th>
+                                <td>
+                                    <?php echo Escape::html($user->getUsername()); ?>
+                                </td>
+                            </tr>
                             <tr>
                                 <th>Jméno:</th>
                                 <td>
@@ -113,17 +115,11 @@ if (Helpers::isFormSent('registration-form')) {
                                     </td>
                                 </tr>
                             <?php endif; ?>
-                            <tr>
-                                <th>Zpráva:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getMessage()); ?>
-                                </td>
-                            </tr>
                         </table>
                 </div>
             </div>
         <?php else: ?>
-            <h3>Formulář</h3>
+            <h3>Registrace uživatele</h3>
             <?php if ($error !== null): ?>
                 <div class="alert alert-danger" role="alert">
                     <?php echo $error; ?>
@@ -131,6 +127,11 @@ if (Helpers::isFormSent('registration-form')) {
             <?php endif; ?>
 
             <form action="" method="post">
+                <div class="form-group">
+                    <label for="username">Uživatelské jméno *</label>
+                    <input type="text" class="form-control" name="username" id="username"
+                           value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
+                </div>
                 <div class="form-group">
                     <label for="name">Jméno *</label>
                     <input type="text" class="form-control" name="name" id="name"
@@ -146,13 +147,8 @@ if (Helpers::isFormSent('registration-form')) {
                     <input type="text" class="form-control" name="email" id="email"
                            value="<?php echo Escape::html(Helpers::getFormValue('email')); ?>" autocomplete="email">
                 </div>
-                <div class="form-group">
-                    <label for="message">Zpráva *</label>
-                    <textarea rows="5" class="form-control" name="message"
-                              id="message"><?php echo Escape::html(Helpers::getFormValue('message')); ?></textarea>
-                </div>
                 <input type="hidden" name="action" value="registration-form">
-                <input type="submit" name="submit" value="Odeslat" class="btn btn-primary">
+                <input type="submit" name="submit" value="Registrovat se" class="btn btn-primary">
             </form>
         <?php endif; ?>
     </div>

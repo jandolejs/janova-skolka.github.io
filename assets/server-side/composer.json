@@ -2,10 +2,12 @@
     "require": {
         "php": ">=7.2",
         "nette/database": "^2.4",
-        "aws/aws-sdk-php": "^3.63"
+        "aws/aws-sdk-php": "^3.63",
+        "tracy/tracy": "^2.5"
     },
     "minimal-stability": "dev",
     "autoload": {
         "classmap": ["libs/"]
-    }
+    },
+    "optimize-autoloader": true
 }

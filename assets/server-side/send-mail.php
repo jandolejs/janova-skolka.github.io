@@ -17,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 try {
+    $username = new Username(getPost('username', ''));
     $name = new Name(getPost('name', ''));
     $email = new Email(getPost('email', ''));
     $phone = getPost('phone', null) !== null ? new Phone(getPost('phone', '')) : '-';
-    $message = new Message(getPost('message', ''));
 } catch (ValidatorException $e) {
     errorResponse('Validation error: ' . $e->getMessage(), null, 400);
 }
@@ -42,16 +42,16 @@ if (!\in_array($email->getContent(), $allowedRecipients, true)) {
 $ses = AwsLoader::getAws()->createSes();
 
 $messageText = <<<EOT
-Vážený pane $name,
-děkujeme za vaši zprávu.
+Vážený užvateli,
+děkujeme za vaši registraci.
 
-===========================
-Rekapitulace zaslané zprávy
-===========================
+=======================
+Rekapitulace registrace
+=======================
+Přihlašovací jméno: $username,
 Jméno: $name,
 Telefon: $phone,
-Email: $email,
-Zpráva: $message
+Email: $email
 EOT;
 
 
@@ -67,7 +67,7 @@ $response = $ses->sendEmail([
             ]
         ],
         'Subject' => [
-            'Data' => 'Potvrzení odeslané zprávy'
+            'Data' => 'Potvrzení registrace uživatele'
         ]
     ]
 ]);
