@@ -4,7 +4,7 @@ namespace Lesson23;
 
 class Message extends ContentType
 {
-    function validate($content)
+    protected function validate($content)
     {
         Validate::required($content);
     }

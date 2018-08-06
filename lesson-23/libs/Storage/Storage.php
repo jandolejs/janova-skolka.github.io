@@ -11,12 +11,12 @@ class Storage
 
     private $path;
 
-    function __construct($path)
+    public function __construct($path)
     {
         $this->path = $path;
     }
 
-    function save($name, $formData)
+    public function save($name, $formData)
     {
         $formData['date'] = date(DATE_ATOM);
         $dataToWrite = json_encode($formData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -31,7 +31,7 @@ class Storage
     }
 
 
-    function getNewFilePath($name)
+    private function getNewFilePath($name)
     {
         $outputFolder = $this->path;
 
@@ -43,7 +43,7 @@ class Storage
     }
 
 
-    function sanitizeName($name)
+    private function sanitizeName($name)
     {
         $name = Strings::webalize($name);
         $name = Strings::truncate($name, '30', '');
