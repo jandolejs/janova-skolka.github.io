@@ -4,7 +4,7 @@ namespace Lesson23;
 
 class Phone extends ContentType
 {
-    public function validate($content)
+    protected function validate($content)
     {
         Validate::phone($content);
     }

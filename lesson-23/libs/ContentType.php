@@ -14,7 +14,7 @@ class ContentType
     }
 
 
-    private function validate($content)
+    protected function validate($content)
     {
     }
 
