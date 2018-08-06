@@ -10,7 +10,7 @@ class User
     private $message;
 
 
-    function __construct(Name $name, ?Phone $phone, ?Email $email, Message $message)
+    public function __construct(Name $name, ?Phone $phone, ?Email $email, Message $message)
     {
         $this->name = $name;
         $this->phone = $phone;
@@ -19,37 +19,37 @@ class User
     }
 
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
 
-    function getPhone()
+    public function getPhone()
     {
         return $this->phone;
     }
 
 
-    function getEmail()
+    public function getEmail()
     {
         return $this->email;
     }
 
 
-    function getMessage()
+    public function getMessage()
     {
         return $this->message;
     }
 
 
-    function hasEmail()
+    public function hasEmail()
     {
         return $this->email instanceof Email;
     }
 
 
-    function hasPhone()
+    public function hasPhone()
     {
         return $this->phone instanceof Phone;
     }

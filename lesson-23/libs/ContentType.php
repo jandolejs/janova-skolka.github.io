@@ -7,25 +7,25 @@ class ContentType
     protected $content;
 
 
-    function __construct($content)
+    public function __construct($content)
     {
         $this->validate($content);
         $this->content = $content;
     }
 
 
-    function validate($content)
+    public function validate($content)
     {
     }
 
 
-    function getContent()
+    public function getContent()
     {
         return $this->content;
     }
 
 
-    function __toString()
+    public function __toString()
     {
         return $this->getContent();
     }
