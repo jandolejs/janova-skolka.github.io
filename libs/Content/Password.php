@@ -17,9 +17,4 @@ class Password extends DataObject
     {
         Validate::required($content) && Validate::password($content);
     }
-
-    public function getHash()
-    {
-        return $this->content;
-    }
 }
