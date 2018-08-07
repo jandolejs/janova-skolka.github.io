@@ -10,19 +10,17 @@ use App\Content\Username;
 
 class User
 {
+
     private $username;
     private $name;
-    private $phone;
-    private $email;
+    private $password;
 
 
-    public function __construct(Username $username, Password $password, Name $name, ?Phone $phone, ?Email $email)
+    public function __construct(Username $username, Password $password, Name $name)
     {
         $this->username = $username;
-        $this->name = $name;
-        $this->phone = $phone;
-        $this->email = $email;
         $this->password = $password;
+        $this->name = $name;
     }
 
 
@@ -38,26 +36,4 @@ class User
     }
 
 
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-
-    public function hasPhone()
-    {
-        return $this->phone instanceof Phone;
-    }
-
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-
-    public function hasEmail()
-    {
-        return $this->email instanceof Email;
-    }
 }
