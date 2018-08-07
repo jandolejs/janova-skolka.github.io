@@ -36,7 +36,7 @@ class Validate
 
     static function password($value)
     {
-        if (strlen(utf8_decode($value)) < 8) {
+        if (mb_strlen($value) < 8) {
             throw new ValidateException('Heslo musí obsahovat alespoň 8 znaků');
         }
         return true;
