@@ -7,12 +7,10 @@ use App\Validator\Validate;
 class Password extends DataObject
 {
 
-    private $hashed;
-
     public function __construct($content)
     {
         parent::__construct($content);
-        $this->hashed = password_hash($content, PASSWORD_BCRYPT);
+        $this->content = password_hash($content, PASSWORD_BCRYPT);
     }
 
     protected function validate($content)
@@ -22,6 +20,6 @@ class Password extends DataObject
 
     public function getHash()
     {
-        return $this->hashed;
+        return $this->content;
     }
 }
