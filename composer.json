@@ -2,6 +2,7 @@
     "require": {
         "ext-curl":"*",
         "ext-json":"*",
+        "ext-mbstring":"*",
         "nette/robot-loader": "^3.0",
         "tracy/tracy": "^2.5"
     }

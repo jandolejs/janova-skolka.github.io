@@ -32,6 +32,12 @@ if (Helpers::isFormSent('registration-form')) {
 
         $username = new Content\Username($formData['username'] = Helpers::getFormValue('username'));
 
+        $passwd = Helpers::getFormValue('password');
+        $password = new Content\Password($passwd);
+        $formData['password'] = password_hash($passwd, PASSWORD_BCRYPT);
+        unset($passwd);
+
+
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $phone = new Content\Phone($formData['phone'] = Helpers::getFormValue('phone'));
         } else {
@@ -40,13 +46,15 @@ if (Helpers::isFormSent('registration-form')) {
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
             $email = new Content\Email($formData['email'] = Helpers::getFormValue('email'));
-            Mail\Mailer::sendMail($formData);
+            $formData_Mail = $formData;
+            unset($formData_Mail['password']);
+            Mail\Mailer::sendMail($formData_Mail);
         } else {
             $email = null;
         }
 
         $storage->save($name, $formData);
-        $user = new User($username, $name, $phone, $email);
+        $user = new User($username, $password, $name, $phone, $email);
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
@@ -86,36 +94,36 @@ if (Helpers::isFormSent('registration-form')) {
                         Registrace byla úspěšně dokončena.
                     </div>
                     <h3>Data z formuláře</h3>
-                        <table class="table table-bordered">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Uživatelské jméno:</th>
+                            <td>
+                                <?php echo Escape::html($user->getUsername()); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Jméno:</th>
+                            <td>
+                                <?php echo Escape::html($user->getName()); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <?php if ($user->hasPhone()): ?>
+                            <th>Telefon:</th>
+                            <td>
+                                <?php echo Escape::html($user->getPhone()); ?>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if ($user->hasEmail()): ?>
                             <tr>
-                                <th>Uživatelské jméno:</th>
+                                <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->getUsername()); ?>
+                                    <?php echo Escape::html($user->getEmail()); ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Jméno:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getName()); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <?php if ($user->hasPhone()): ?>
-                                <th>Telefon:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getPhone()); ?>
-                                </td>
-                            </tr>
-                            <?php endif; ?>
-                            <?php if ($user->hasEmail()): ?>
-                                <tr>
-                                    <th>Email:</th>
-                                    <td>
-                                        <?php echo Escape::html($user->getEmail()); ?>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </table>
+                        <?php endif; ?>
+                    </table>
                 </div>
             </div>
         <?php else: ?>
@@ -128,14 +136,18 @@ if (Helpers::isFormSent('registration-form')) {
 
             <form action="" method="post">
                 <div class="form-group">
+                    <label for="name">Jméno *</label>
+                    <input type="text" class="form-control" name="name" id="name"
+                           value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
+                </div>
+                <div class="form-group">
                     <label for="username">Uživatelské jméno *</label>
                     <input type="text" class="form-control" name="username" id="username"
                            value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
                 </div>
                 <div class="form-group">
-                    <label for="name">Jméno *</label>
-                    <input type="text" class="form-control" name="name" id="name"
-                           value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
+                    <label for="password">Heslo *</label>
+                    <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <div class="form-group">
                     <label for="phone">Telefon</label>
