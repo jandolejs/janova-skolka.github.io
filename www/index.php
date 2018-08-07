@@ -46,7 +46,7 @@ if (Helpers::isFormSent('registration-form')) {
         }
 
         $storage->save($name);
-        $user = new User($username, $password, $name, $phone, $email);
+        $user = new User($username, $password, $name);
 
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');

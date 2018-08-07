@@ -13,6 +13,8 @@ class User
 
     private $username;
     private $name;
+    private $phone;
+    private $email;
     private $password;
 
 
@@ -36,4 +38,24 @@ class User
     }
 
 
+    public function setPhone($value)
+    {
+        $this->phone = $value;
+    }
+
+    public function hasPhone()
+    {
+        return $this->phone !== null;
+    }
+
+
+    public function setEmail($value)
+    {
+        $this->email = $value;
+    }
+
+    public function hasEmail()
+    {
+        return $this->email !== null;
+    }
 }
