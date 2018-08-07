@@ -34,6 +34,16 @@ class Validate
     }
 
 
+    static function password($value)
+    {
+        var_dump($value);
+        if (strlen($value) < 8) {
+            throw new ValidateException('Heslo musí obsahovat alespoň 8 znaků');
+        }
+        return true;
+    }
+
+
     static function phone($value)
     {
         $isValid = preg_match('/^ *(\d *){9}$/', $value);

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Content\Email;
 use App\Content\Name;
+use App\Content\Password;
 use App\Content\Phone;
 use App\Content\Username;
 
@@ -15,12 +16,13 @@ class User
     private $email;
 
 
-    public function __construct(Username $username, Name $name, ?Phone $phone, ?Email $email)
+    public function __construct(Username $username, Password $password, Name $name, ?Phone $phone, ?Email $email)
     {
         $this->username = $username;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
+        $this->password = $password;
     }
 
 

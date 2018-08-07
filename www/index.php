@@ -32,6 +32,8 @@ if (Helpers::isFormSent('registration-form')) {
 
         $username = new Content\Username($formData['username'] = Helpers::getFormValue('username'));
 
+        $password = new Content\Password($formData['password'] = Helpers::getFormValue('password'));
+
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $phone = new Content\Phone($formData['phone'] = Helpers::getFormValue('phone'));
         } else {
@@ -46,7 +48,7 @@ if (Helpers::isFormSent('registration-form')) {
         }
 
         $storage->save($name, $formData);
-        $user = new User($username, $name, $phone, $email);
+        $user = new User($username, $password, $name, $phone, $email);
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
