@@ -86,36 +86,36 @@ if (Helpers::isFormSent('registration-form')) {
                         Registrace byla úspěšně dokončena.
                     </div>
                     <h3>Data z formuláře</h3>
-                        <table class="table table-bordered">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Uživatelské jméno:</th>
+                            <td>
+                                <?php echo Escape::html($user->getUsername()); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Jméno:</th>
+                            <td>
+                                <?php echo Escape::html($user->getName()); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <?php if ($user->hasPhone()): ?>
+                            <th>Telefon:</th>
+                            <td>
+                                <?php echo Escape::html($user->getPhone()); ?>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if ($user->hasEmail()): ?>
                             <tr>
-                                <th>Uživatelské jméno:</th>
+                                <th>Email:</th>
                                 <td>
-                                    <?php echo Escape::html($user->getUsername()); ?>
+                                    <?php echo Escape::html($user->getEmail()); ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Jméno:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getName()); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <?php if ($user->hasPhone()): ?>
-                                <th>Telefon:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getPhone()); ?>
-                                </td>
-                            </tr>
-                            <?php endif; ?>
-                            <?php if ($user->hasEmail()): ?>
-                                <tr>
-                                    <th>Email:</th>
-                                    <td>
-                                        <?php echo Escape::html($user->getEmail()); ?>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </table>
+                        <?php endif; ?>
+                    </table>
                 </div>
             </div>
         <?php else: ?>
