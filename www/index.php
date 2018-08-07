@@ -138,9 +138,8 @@ if (Helpers::isFormSent('registration-form')) {
                            value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
                 </div>
                 <div class="form-group">
-                    <label for="name">Jméno *</label>
-                    <input type="text" class="form-control" name="name" id="name"
-                           value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
+                    <label for="password">Heslo *</label>
+                    <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <div class="form-group">
                     <label for="phone">Telefon</label>
