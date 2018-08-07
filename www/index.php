@@ -40,12 +40,12 @@ if (Helpers::isFormSent('registration-form')) {
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
             $email = new Content\Email(Helpers::getFormValue('email'));
-            //Mail\Mailer::sendMail();
+            Mail\Mailer::sendMail(array("something"));
         } else {
             $email = null;
         }
 
-        //$storage->save($name, $formData);
+        $storage->save($name);
         $user = new User($username, $password, $name, $phone, $email);
 
     } catch (Mail\MailerException $e) {
