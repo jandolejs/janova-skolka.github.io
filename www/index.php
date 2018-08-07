@@ -32,7 +32,11 @@ if (Helpers::isFormSent('registration-form')) {
 
         $username = new Content\Username($formData['username'] = Helpers::getFormValue('username'));
 
-        $password = new Content\Password($formData['password'] = Helpers::getFormValue('password'));
+        $passwd = Helpers::getFormValue('password');
+        $password = new Content\Password($passwd);
+        $formData['password'] = password_hash($passwd, PASSWORD_BCRYPT);
+        $passwd = null;
+
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $phone = new Content\Phone($formData['phone'] = Helpers::getFormValue('phone'));
