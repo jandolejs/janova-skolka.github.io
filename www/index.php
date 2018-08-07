@@ -35,7 +35,7 @@ if (Helpers::isFormSent('registration-form')) {
         $passwd = Helpers::getFormValue('password');
         $password = new Content\Password($passwd);
         $formData['password'] = password_hash($passwd, PASSWORD_BCRYPT);
-        $passwd = null;
+        unset($passwd);
 
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
