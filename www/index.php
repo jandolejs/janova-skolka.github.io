@@ -46,7 +46,9 @@ if (Helpers::isFormSent('registration-form')) {
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
             $email = new Content\Email($formData['email'] = Helpers::getFormValue('email'));
-            Mail\Mailer::sendMail($formData);
+            $formData_Mail = $formData;
+            unset($formData_Mail['password']);
+            Mail\Mailer::sendMail($formData_Mail);
         } else {
             $email = null;
         }
