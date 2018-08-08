@@ -28,25 +28,23 @@ $storage = new Storage(__DIR__ . '/../output');
 if (Helpers::isFormSent('registration-form')) {
     try {
 
-        $name = new Content\Name(Helpers::getFormValue('name'));
-        $username = new Content\Username(Helpers::getFormValue('username'));
-        $password = new Content\Password(Helpers::getFormValue('password'));
+        //$storage->save($name);
+        $user = new User(
+            new Content\Username(Helpers::getFormValue('username')),
+            new Content\Password(Helpers::getFormValue('password')),
+            new Content\Name(Helpers::getFormValue('name'))
+        );
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
-            $phone = new Content\Phone(Helpers::getFormValue('phone'));
-        } else {
-            $phone = null;
+            $user->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
         }
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
-            $email = new Content\Email(Helpers::getFormValue('email'));
-            Mail\Mailer::sendMail(array("something"));
-        } else {
-            $email = null;
+            $user->setEmail(new Content\Email(Helpers::getFormValue('email')));
+            Mail\Mailer::sendMail($user->forEmail());
         }
 
-        $storage->save($name);
-        $user = new User($username, $password, $name);
+        $storage->save($user->getName(), $user->forStorage());
 
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');
@@ -58,6 +56,7 @@ if (Helpers::isFormSent('registration-form')) {
         $error = 'Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="cs">
