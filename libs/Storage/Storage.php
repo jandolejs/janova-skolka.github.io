@@ -4,7 +4,6 @@ namespace App\Storage;
 
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 
 class Storage
 {
@@ -16,10 +15,9 @@ class Storage
         $this->path = $path;
     }
 
-    public function save($name, $formData)
+    public function save($name, $data)
     {
-        $formData['date'] = date(DATE_ATOM);
-        $dataToWrite = json_encode($formData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $dataToWrite = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         $filePath = $this->getNewFilePath($name);
 

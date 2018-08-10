@@ -21,37 +21,31 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 
 $user = null;
 $error = null;
-$formData = [];
 $storage = new Storage(__DIR__ . '/../output');
 
 // ===== Aplikace ===============================
 
 if (Helpers::isFormSent('registration-form')) {
     try {
-        $name = new Content\Name($formData['name'] = Helpers::getFormValue('name'));
 
-        $username = new Content\Username($formData['username'] = Helpers::getFormValue('username'));
-
-        $password = new Content\Password(Helpers::getFormValue('password'));
-        $formData['password'] = $password->getContent();
+        //$storage->save($name);
+        $user = new User(
+            new Content\Username(Helpers::getFormValue('username')),
+            new Content\Password(Helpers::getFormValue('password')),
+            new Content\Name(Helpers::getFormValue('name'))
+        );
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
-            $phone = new Content\Phone($formData['phone'] = Helpers::getFormValue('phone'));
-        } else {
-            $phone = null;
+            $user->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
         }
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
-            $email = new Content\Email($formData['email'] = Helpers::getFormValue('email'));
-            $formData_Mail = $formData;
-            unset($formData_Mail['password']);
-            Mail\Mailer::sendMail($formData_Mail);
-        } else {
-            $email = null;
+            $user->setEmail(new Content\Email(Helpers::getFormValue('email')));
+            Mail\Mailer::sendMail($user->forEmail());
         }
 
-        $storage->save($name, $formData);
-        $user = new User($username, $password, $name, $phone, $email);
+        $storage->save($user->getName(), $user->forStorage());
+
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');
         $error = 'Email se nepovedlo odeslat z tohoto důvodu: ' . $e->getMessage();
@@ -62,6 +56,7 @@ if (Helpers::isFormSent('registration-form')) {
         $error = 'Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="cs">
