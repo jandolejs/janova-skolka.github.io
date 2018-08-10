@@ -41,10 +41,10 @@ if (Helpers::isFormSent('registration-form')) {
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
             $user->setEmail(new Content\Email(Helpers::getFormValue('email')));
-            Mail\Mailer::sendMail($user->forEmail());
+            Mail\Mailer::sendMail($user->toArray());
         }
 
-        $storage->save($user->getName(), $user->forStorage());
+        $storage->save($user->getName(), $user->toArray(User::WITH_PASSWORD));
 
     } catch (Mail\MailerException $e) {
         Debugger::log('email_not_sent="' . $e->getMessage() . '"');

@@ -10,6 +10,14 @@ use App\Content\Username;
 
 class User
 {
+    /**
+     * Flags for `toArray()` to no propagate password in returned Array
+     */
+    public const WITHOUT_PASSWORD = false;
+    /**
+     * Flags for `toArray()` to propagate password in returned Array
+     */
+    public const WITH_PASSWORD = true;
 
     /**
      * @var Username
@@ -51,40 +59,24 @@ class User
     }
 
 
-    public function forEmail()
+    /**
+     * @param bool $flags
+     * @return array
+     */
+    public function toArray($flags = self::WITHOUT_PASSWORD)
     {
-        $formdata = [
+        $array = [
             'name' => (string)$this->name,
             'username' => (string)$this->username,
-        ];
-        if ($this->phone) {
-            $formdata['phone'] = (string)$this->phone;
-        }
-        if ($this->email) {
-            $formdata['email'] = (string)$this->email;
-        }
-        return $formdata;
-    }
-
-
-    public function forStorage()
-    {
-
-        $formdata = [
-            'name' => (string)$this->name,
-            'username' => (string)$this->username,
-            'password' => (string)$this->password,
+            'phone' => $this->hasPhone() ? (string)$this->getPhone() : null,
+            'email' => $this->hasEmail() ? (string)$this->getEmail() : null,
         ];
 
-        if ($this->phone) {
-            $formdata['phone'] = (string)$this->phone;
+        if ($flags === self::WITH_PASSWORD) {
+            $array['password'] = (string)$this->password;
         }
 
-        if ($this->email) {
-            $formdata['email'] = (string)$this->email;
-        }
-
-        return $formdata;
+        return $array;
     }
 
 
