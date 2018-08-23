@@ -9,10 +9,20 @@ class Storage
 {
 
     private $path;
+    private $files;
 
     public function __construct($path)
     {
         $this->path = $path;
+        $this->findFiles();
+    }
+
+    private function findFiles()
+    {
+        $this->files = scandir($this->path);
+        if (count($this->files) > 2) {
+            echo "jsou tu";
+        }
     }
 
     public function save($name, $data)
@@ -28,7 +38,6 @@ class Storage
         }
     }
 
-
     private function getNewFilePath($name)
     {
         $outputFolder = $this->path;
@@ -39,7 +48,6 @@ class Storage
 
         return "$outputFolder/$date-$name-$random.json";
     }
-
 
     private function sanitizeName($name)
     {
