@@ -13,7 +13,6 @@ class Storage
 
     public function __construct($path)
     {
-
         $this->path = $path;
     }
 
@@ -36,7 +35,7 @@ class Storage
     {
 
         $content = file_get_contents($this->path . "/" . $key);
-        $data = json_decode($content);
+        $data = json_decode($content, true);
 
         return $data;
     }
