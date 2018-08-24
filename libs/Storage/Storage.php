@@ -2,6 +2,7 @@
 
 namespace App\Storage;
 
+use Nette\Utils\Json;
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
 
@@ -34,14 +35,13 @@ class Storage
     {
 
         $content = file_get_contents($this->path . "/" . $key);
-        $data = json_decode($content, true);
-
+        $data = Json::decode($content, Json::FORCE_ARRAY);
         return $data;
     }
 
     public function save($name, $data)
     {
-        $dataToWrite = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $dataToWrite = Json::encode($data, Json::PRETTY);
 
         $filePath = $this->getNewFilePath($name);
 
