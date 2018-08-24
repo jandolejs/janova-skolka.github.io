@@ -10,25 +10,14 @@ class Storage
 
     private $path;
     private $files;
-    static $userInfo;
 
     public function __construct($path)
     {
 
         $this->path = $path;
-        $keys = $this->findKeys();
-
-        if (count($keys)) {
-            self::$userInfo = $this->getByKey($keys[0]);
-        }
     }
 
-    public static function getUserInfo()
-    {
-        return self::$userInfo;
-    }
-
-    private function findKeys()
+    public function findKeys()
     {
 
         $data = [];
@@ -43,7 +32,7 @@ class Storage
         return $data;
     }
 
-    private function getByKey($key)
+    public function getByKey($key)
     {
 
         $content = file_get_contents($this->path . "/" . $key);

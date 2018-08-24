@@ -22,9 +22,14 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
-$userInfo = $storage::getUserInfo();
 
-bdump($userInfo); if($userInfo)echo "je";  else echo "neni";
+$users = $storage->findKeys();
+$sampleUser = null;
+if(count($users)) {
+    $sampleUser = $storage->getByKey($users[0]);
+}
+
+bdump($sampleUser); if($sampleUser)echo "je";  else echo "neni";
 
 // ===== Aplikace ===============================
 
