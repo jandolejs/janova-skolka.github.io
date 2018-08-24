@@ -2,6 +2,7 @@
 
 namespace App\Storage;
 
+use Nette\Utils\Json;
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
 
@@ -15,9 +16,32 @@ class Storage
         $this->path = $path;
     }
 
+    public function findKeys()
+    {
+
+        $data = [];
+        $files = scandir($this->path);
+
+        foreach ($files as $file) {
+            if (preg_match('/^\d{4}(-\d\d){5}-.+\.json$/', $file)) {
+                $data[] = $file;
+            }
+        }
+
+        return $data;
+    }
+
+    public function getByKey($key)
+    {
+
+        $content = file_get_contents($this->path . "/" . $key);
+        $data = Json::decode($content, Json::FORCE_ARRAY);
+        return $data;
+    }
+
     public function save($name, $data)
     {
-        $dataToWrite = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $dataToWrite = Json::encode($data, Json::PRETTY);
 
         $filePath = $this->getNewFilePath($name);
 
@@ -27,7 +51,6 @@ class Storage
             throw new StorageException('Unable to save file ' . $filePath);
         }
     }
-
 
     private function getNewFilePath($name)
     {
@@ -39,7 +62,6 @@ class Storage
 
         return "$outputFolder/$date-$name-$random.json";
     }
-
 
     private function sanitizeName($name)
     {

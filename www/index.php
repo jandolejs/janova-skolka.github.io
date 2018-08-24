@@ -23,12 +23,13 @@ $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
 
+$users = $storage->findKeys();
+
 // ===== Aplikace ===============================
 
 if (Helpers::isFormSent('registration-form')) {
     try {
 
-        //$storage->save($name);
         $user = new User(
             new Content\Username(Helpers::getFormValue('username')),
             new Content\Password(Helpers::getFormValue('password')),
@@ -78,7 +79,20 @@ if (Helpers::isFormSent('registration-form')) {
 <div class="container">
     <div class="jumbotron">
         <h1>Zkušební aplikace</h1>
-
+        <?php if ($users) {
+            echo '<h3>Uživatelé:</h3>';
+            echo '<table class="table table-bordered table-hover">';
+            foreach ($users as $user) {
+                echo '<tr>';
+                $data = $storage->getByKey($user);
+                echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
+                echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
+                echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
+                echo '<td>' . (isset($data['mail']) ? $data['mail'] : "-") . '</td>';
+                echo '</tr>';
+            }
+            echo '</table>';
+        } ?>
         <?php if ($user instanceof User): ?>
             <div class="row">
                 <div class="col-sm-12">
