@@ -9,7 +9,6 @@ class Storage
 {
 
     private $path;
-    private $files;
 
     public function __construct($path)
     {
@@ -20,9 +19,9 @@ class Storage
     {
 
         $data = [];
-        $this->files = scandir($this->path);
+        $files = scandir($this->path);
 
-        foreach ($this->files as $file) {
+        foreach ($files as $file) {
             if (preg_match('/^\d{4}(-\d\d){5}-.+\.json$/', $file)) {
                 $data[] = $file;
             }
