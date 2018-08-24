@@ -10,19 +10,46 @@ class Storage
 
     private $path;
     private $files;
+    static $userInfo;
 
     public function __construct($path)
     {
+
         $this->path = $path;
-        $this->findFiles();
+        $keys = $this->findKeys();
+
+        if (count($keys)) {
+            self::$userInfo = $this->getByKey($keys[0]);
+        }
     }
 
-    private function findFiles()
+    public static function getUserInfo()
     {
+        return self::$userInfo;
+    }
+
+    private function findKeys()
+    {
+
+        $data = [];
         $this->files = scandir($this->path);
-        if (count($this->files) > 2) {
-            echo "jsou tu";
+
+        foreach ($this->files as $file) {
+            if (preg_match('/^\d{4}(-\d\d){5}-.+\.json$/', $file)) {
+                $data[] = $file;
+            }
         }
+
+        return $data;
+    }
+
+    private function getByKey($key)
+    {
+
+        $content = file_get_contents($this->path . "/" . $key);
+        $data = json_decode($content);
+
+        return $data;
     }
 
     public function save($name, $data)

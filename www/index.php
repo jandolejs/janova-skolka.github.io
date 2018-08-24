@@ -22,6 +22,9 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
+$userInfo = $storage::getUserInfo();
+
+bdump($userInfo); if($userInfo)echo "je";  else echo "neni";
 
 // ===== Aplikace ===============================
 
