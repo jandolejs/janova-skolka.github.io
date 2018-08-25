@@ -66,7 +66,11 @@ if ($pageAddress == "/www/index.php/add") {
     if ($pageAddress == "/www/index.php/show") {
         $pageNum = 'show';
     } else {
-        $pageNum = '404';
+        if ($pageAddress == "/www/index.php") {
+            $pageNum = 'welcome';
+        } else {
+            $pageNum = '404';
+        }
     }
 }
 
@@ -90,14 +94,16 @@ if ($pageAddress == "/www/index.php/add") {
 <body>
 <div class="container">
 
-    <div class="navButtons">
-        <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
-                echo '*';
-            } ?>Registrace uživatele</a>
-        <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 'show') {
-                echo '*';
-            } ?>Seznam uživatelů</a>
-    </div>
+    <?php if ($pageNum != "welcome") : ?>
+        <div class="navButtons">
+            <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
+                    echo '*';
+                } ?>Registrace uživatele</a>
+            <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 'show') {
+                    echo '*';
+                } ?>Seznam uživatelů</a>
+        </div>
+    <?php endif; ?>
 
     <div class="jumbotron">
 
@@ -170,7 +176,7 @@ if ($pageAddress == "/www/index.php/add") {
                 <h3>Registrace uživatele</h3>
                 <?php if ($error !== null): ?>
                     <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <?php echo $error; ?>
                     </div>
                 <?php endif; ?>
@@ -210,6 +216,12 @@ if ($pageAddress == "/www/index.php/add") {
             http_response_code(404);
             echo '<h2>Stránka nenalezena :(</h2>';
         } ?>
+
+        <?php if ($pageNum == 'welcome') {
+            echo '<h2>Úvodní stránka</h2>' ?>
+            <a class="btn btn-lg btn-success" href="/www/add"><span class="glyphicon glyphicon-plus"></span> Přidat</a>
+            <a class="btn btn-lg btn-success" href="/www/show"><span class="glyphicon glyphicon-list"></span> Zobrazit</a>
+        <?php } ?>
     </div>
 </div>
 </body>
