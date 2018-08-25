@@ -96,8 +96,12 @@ if ($pageAddress == "/www/index.php/add") {
 
     <nav class="navbar navbar-default">
         <div class="navButtons">
-            <a class="navbar-brand" href="/www">Úvodní stránka</a>
+
+            <a class="navbar-brand"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
             <ul class="nav navbar-nav">
+                <li class="<?php if ($pageNum == "welcome") {
+                    echo 'active';
+                } ?>"><a href="/www">úvodní stránka</a></li>
                 <li class="<?php if ($pageNum == "add") {
                     echo 'active';
                 } ?>"><a href="/www/add">Registrace uživatele</a></li>
