@@ -170,6 +170,7 @@ if ($pageAddress == "/www/index.php/add") {
                 <h3>Registrace uživatele</h3>
                 <?php if ($error !== null): ?>
                     <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <?php echo $error; ?>
                     </div>
                 <?php endif; ?>
