@@ -58,6 +58,18 @@ if (Helpers::isFormSent('registration-form')) {
     }
 }
 
+$pageNum = null;
+$pageAddress = $_SERVER['PHP_SELF'];
+if ($pageAddress == "/www/index.php/add") {
+    $pageNum = 1;
+} else {
+    if ($pageAddress == "/www/index.php/show") {
+        $pageNum = 2;
+    } else {
+        $pageNum = 0;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -77,98 +89,124 @@ if (Helpers::isFormSent('registration-form')) {
 </head>
 <body>
 <div class="container">
+
+    <div class="navButtons">
+        <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 1) {
+                echo '*';
+            } ?>Registrace uživatele</a>
+        <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 2) {
+                echo '*';
+            } ?>Seznam uživatelů</a>
+    </div>
+
     <div class="jumbotron">
+
         <h1>Zkušební aplikace</h1>
-        <?php if ($users) {
-            echo '<h3>Uživatelé:</h3>';
-            echo '<table class="table table-bordered table-hover">';
-            foreach ($users as $user) {
-                echo '<tr>';
-                $data = $storage->getByKey($user);
-                echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
-                echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
-                echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
-                echo '<td>' . (isset($data['mail']) ? $data['mail'] : "-") . '</td>';
-                echo '</tr>';
+
+        <?php if ($pageNum == '2') {
+            echo '<h2>Uživatelé</h2>';
+            if ($users) {
+
+                echo '<table class="table table-bordered table-hover">';
+
+                foreach ($users as $user) {
+                    echo '<tr>';
+                    $data = $storage->getByKey($user);
+                    echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
+                    echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
+                    echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
+                    echo '<td>' . (isset($data['mail']) ? $data['mail'] : "-") . '</td>';
+                    echo '</tr>';
+                }
+
+                echo '</table>';
+            } else {
+                echo '<h4>žádný uživatel</h4>';
             }
-            echo '</table>';
         } ?>
-        <?php if ($user instanceof User): ?>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="alert alert-success" role="alert">
-                        Registrace byla úspěšně dokončena.
-                    </div>
-                    <h3>Data z formuláře</h3>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Uživatelské jméno:</th>
-                            <td>
-                                <?php echo Escape::html($user->getUsername()); ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Jméno:</th>
-                            <td>
-                                <?php echo Escape::html($user->getName()); ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <?php if ($user->hasPhone()): ?>
-                            <th>Telefon:</th>
-                            <td>
-                                <?php echo Escape::html($user->getPhone()); ?>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php if ($user->hasEmail()): ?>
+
+        <?php if ($pageNum == '1') : ?>
+            <?php if ($user instanceof User): ?>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-success" role="alert">
+                            Registrace byla úspěšně dokončena.
+                        </div>
+                        <h3>Data z formuláře</h3>
+                        <table class="table table-bordered">
                             <tr>
-                                <th>Email:</th>
+                                <th>Uživatelské jméno:</th>
                                 <td>
-                                    <?php echo Escape::html($user->getEmail()); ?>
+                                    <?php echo Escape::html($user->getUsername()); ?>
                                 </td>
                             </tr>
-                        <?php endif; ?>
-                    </table>
+                            <tr>
+                                <th>Jméno:</th>
+                                <td>
+                                    <?php echo Escape::html($user->getName()); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <?php if ($user->hasPhone()): ?>
+                                <th>Telefon:</th>
+                                <td>
+                                    <?php echo Escape::html($user->getPhone()); ?>
+                                </td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php if ($user->hasEmail()): ?>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>
+                                        <?php echo Escape::html($user->getEmail()); ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        <?php else: ?>
-            <h3>Registrace uživatele</h3>
-            <?php if ($error !== null): ?>
-                <div class="alert alert-danger" role="alert">
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
+            <?php else: ?>
+                <h3>Registrace uživatele</h3>
+                <?php if ($error !== null): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error; ?>
+                    </div>
+                <?php endif; ?>
 
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="name">Jméno *</label>
-                    <input type="text" class="form-control" name="name" id="name"
-                           value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
-                </div>
-                <div class="form-group">
-                    <label for="username">Uživatelské jméno *</label>
-                    <input type="text" class="form-control" name="username" id="username"
-                           value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Heslo *</label>
-                    <input type="password" class="form-control" name="password" id="password">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Telefon</label>
-                    <input type="text" class="form-control" name="phone" id="phone"
-                           value="<?php echo Escape::html(Helpers::getFormValue('phone')); ?>" autocomplete="tel-national">
-                </div>
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="text" class="form-control" name="email" id="email"
-                           value="<?php echo Escape::html(Helpers::getFormValue('email')); ?>" autocomplete="email">
-                </div>
-                <input type="hidden" name="action" value="registration-form">
-                <input type="submit" name="submit" value="Registrovat se" class="btn btn-primary">
-            </form>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="name">Jméno *</label>
+                        <input type="text" class="form-control" name="name" id="name"
+                               value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Uživatelské jméno *</label>
+                        <input type="text" class="form-control" name="username" id="username"
+                               value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Heslo *</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="text" class="form-control" name="phone" id="phone"
+                               value="<?php echo Escape::html(Helpers::getFormValue('phone')); ?>" autocomplete="tel-national">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" class="form-control" name="email" id="email"
+                               value="<?php echo Escape::html(Helpers::getFormValue('email')); ?>" autocomplete="email">
+                    </div>
+                    <input type="hidden" name="action" value="registration-form">
+                    <input type="submit" name="submit" value="Registrovat se" class="btn btn-primary">
+                </form>
+            <?php endif; ?>
         <?php endif; ?>
+
+        <?php if ($pageNum == '0') {
+            echo '<h2>Stránka nenalezena :(</h2>';
+        } ?>
     </div>
 </div>
 </body>
