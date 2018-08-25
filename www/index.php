@@ -4,7 +4,6 @@ namespace App;
 
 use App\Content;
 use App\Storage\Storage;
-use App\Validator\Validate;
 use App\Validator\ValidateException;
 use Tracy\Debugger;
 use Tracy\ILogger;
@@ -36,7 +35,6 @@ if (Helpers::isFormSent('registration-form')) {
             new Content\Password(Helpers::getFormValue('password')),
             new Content\Name(Helpers::getFormValue('name'))
         );
-
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $user->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
@@ -93,7 +91,7 @@ if ($pageAddress == "/www/index.php/add") {
 <div class="container">
 
     <div class="navButtons">
-            <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
+        <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
                 echo '*';
             } ?>Registrace uživatele</a>
         <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 'show') {
