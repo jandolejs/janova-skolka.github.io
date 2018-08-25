@@ -94,16 +94,19 @@ if ($pageAddress == "/www/index.php/add") {
 <body>
 <div class="container">
 
-    <?php if ($pageNum != "welcome") : ?>
+    <nav class="navbar navbar-default">
         <div class="navButtons">
-            <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
-                    echo '*';
-                } ?>Registrace uživatele</a>
-            <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 'show') {
-                    echo '*';
-                } ?>Seznam uživatelů</a>
+            <a class="navbar-brand" href="/www">Úvodní stránka</a>
+            <ul class="nav navbar-nav">
+                <li class="<?php if ($pageNum == "add") {
+                    echo 'active';
+                } ?>"><a href="/www/add">Registrace uživatele</a></li>
+                <li class="<?php if ($pageNum == "show") {
+                    echo 'active';
+                } ?>"><a href="/www/show">Seznam uživatelů</a></li>
+            </ul>
         </div>
-    <?php endif; ?>
+    </nav>
 
     <div class="jumbotron">
 
@@ -217,10 +220,8 @@ if ($pageAddress == "/www/index.php/add") {
             echo '<h2>Stránka nenalezena :(</h2>';
         } ?>
 
-        <?php if ($pageNum == 'welcome') {
-            echo '<h2>Úvodní stránka</h2>' ?>
-            <a class="btn btn-lg btn-success" href="/www/add"><span class="glyphicon glyphicon-plus"></span> Přidat</a>
-            <a class="btn btn-lg btn-success" href="/www/show"><span class="glyphicon glyphicon-list"></span> Zobrazit</a>
+        <?php if ($pageNum == 'welcome') { ?>
+            <p>Nějaký pěkný popis téhle aplikace který může obsahovat třeba návod na ovládání nebo jiné užitečné rady.</p>
         <?php } ?>
     </div>
 </div>
