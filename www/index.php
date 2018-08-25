@@ -4,6 +4,7 @@ namespace App;
 
 use App\Content;
 use App\Storage\Storage;
+use App\Validator\Validate;
 use App\Validator\ValidateException;
 use Tracy\Debugger;
 use Tracy\ILogger;
@@ -35,6 +36,7 @@ if (Helpers::isFormSent('registration-form')) {
             new Content\Password(Helpers::getFormValue('password')),
             new Content\Name(Helpers::getFormValue('name'))
         );
+
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $user->setPhone(new Content\Phone(Helpers::getFormValue('phone')));

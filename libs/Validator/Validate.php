@@ -2,6 +2,8 @@
 
 namespace App\Validator;
 
+use App\Storage\Storage;
+
 class Validate
 {
     static function email($value)
@@ -26,10 +28,23 @@ class Validate
 
     static function username($value)
     {
+
         $isValid = preg_match('/^[.a-z0-9]+\z/i', $value);
         if (!$isValid) {
             throw new ValidateException('Přihlašovací jméno smí obsahovat jen latinská písmena bez diakritiky, čísla a tečky');
         }
+
+        $storage = new Storage(__DIR__ . '/../../output');
+        $users = $storage->findKeys();
+        foreach ($users as $name) {
+
+            $data = $storage->getByKey($name);
+
+            if ($value == $data['username']) {
+                throw new ValidateException('Uživatelské jméno již existuje');
+            }
+        }
+
         return $isValid;
     }
 
