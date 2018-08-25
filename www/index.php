@@ -61,12 +61,12 @@ if (Helpers::isFormSent('registration-form')) {
 $pageNum = null;
 $pageAddress = $_SERVER['PHP_SELF'];
 if ($pageAddress == "/www/index.php/add") {
-    $pageNum = 1;
+    $pageNum = 'add';
 } else {
     if ($pageAddress == "/www/index.php/show") {
-        $pageNum = 2;
+        $pageNum = 'show';
     } else {
-        $pageNum = 0;
+        $pageNum = '404';
     }
 }
 
@@ -91,10 +91,10 @@ if ($pageAddress == "/www/index.php/add") {
 <div class="container">
 
     <div class="navButtons">
-        <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 1) {
+            <a class="btn btn-primary" href="/www/add">  <?php if ($pageNum == 'add') {
                 echo '*';
             } ?>Registrace uživatele</a>
-        <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 2) {
+        <a class="btn btn-primary" href="/www/show"> <?php if ($pageNum == 'show') {
                 echo '*';
             } ?>Seznam uživatelů</a>
     </div>
@@ -103,7 +103,7 @@ if ($pageAddress == "/www/index.php/add") {
 
         <h1>Zkušební aplikace</h1>
 
-        <?php if ($pageNum == '2') {
+        <?php if ($pageNum == 'show') {
             echo '<h2>Uživatelé</h2>';
             if ($users) {
 
@@ -125,13 +125,14 @@ if ($pageAddress == "/www/index.php/add") {
             }
         } ?>
 
-        <?php if ($pageNum == '1') : ?>
+        <?php if ($pageNum == 'add') : ?>
             <?php if ($user instanceof User): ?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="alert alert-success" role="alert">
                             Registrace byla úspěšně dokončena.
                         </div>
+                        <a class="btn btn-success" href="/www/add">Registrace dalšího uživatele</a>
                         <h3>Data z formuláře</h3>
                         <table class="table table-bordered">
                             <tr>
@@ -204,7 +205,8 @@ if ($pageAddress == "/www/index.php/add") {
             <?php endif; ?>
         <?php endif; ?>
 
-        <?php if ($pageNum == '0') {
+        <?php if ($pageNum == '404') {
+            http_response_code(404);
             echo '<h2>Stránka nenalezena :(</h2>';
         } ?>
     </div>
