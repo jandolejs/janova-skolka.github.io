@@ -128,7 +128,7 @@ if ($pageAddress == "/www/index.php/add") {
                     echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
                     echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
                     echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
-                    echo '<td>' . (isset($data['mail']) ? $data['mail'] : "-") . '</td>';
+                    echo '<td>' . (isset($data['email']) ? $data['email'] : "-") . '</td>';
                     echo '</tr>';
                 }
 
