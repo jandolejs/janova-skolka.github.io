@@ -144,8 +144,8 @@ if ($pageAddress == "/www/index.php/add") {
                     <div class="col-sm-12">
                         <div class="alert alert-success" role="alert">
                             Registrace byla úspěšně dokončena.
+                            <a class="btn btn-success" style="margin-left: 2%;" href="/www/add"> Registrace dalšího uživatele</a>
                         </div>
-                        <a class="btn btn-success" href="/www/add">Registrace dalšího uživatele</a>
                         <h3>Data z formuláře</h3>
                         <table class="table table-bordered">
                             <tr>
