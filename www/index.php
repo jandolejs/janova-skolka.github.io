@@ -97,7 +97,11 @@ if ($pageAddress == "/www/index.php/add") {
     <nav class="navbar navbar-default">
         <div class="navButtons">
 
-            <a class="navbar-brand"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+            <a class="navbar-brand">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Name
+            </a>
+
             <ul class="nav navbar-nav">
                 <li class="<?php if ($pageNum == "welcome") {
                     echo 'active';
@@ -117,14 +121,18 @@ if ($pageAddress == "/www/index.php/add") {
         <h1>Zkušební aplikace</h1>
 
         <?php if ($pageNum == 'show') {
+
             echo '<h2>Uživatelé</h2>';
+
             if ($users) {
 
                 echo '<table class="table table-bordered table-hover">';
 
                 foreach ($users as $user) {
-                    echo '<tr>';
+
                     $data = $storage->getByKey($user);
+
+                    echo '<tr>';
                     echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
                     echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
                     echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
@@ -138,86 +146,76 @@ if ($pageAddress == "/www/index.php/add") {
             }
         } ?>
 
-        <?php if ($pageNum == 'add') : ?>
-            <?php if ($user instanceof User): ?>
+        <?php if ($pageNum == 'add') { ?>
+            <?php if ($user instanceof User) { ?>
                 <div class="row">
                     <div class="col-sm-12">
+
                         <div class="alert alert-success" role="alert">
                             Registrace byla úspěšně dokončena.
                             <a class="btn btn-success" style="margin-left: 2%;" href="/www/add"> Registrace dalšího uživatele</a>
                         </div>
+
                         <h3>Data z formuláře</h3>
+
                         <table class="table table-bordered">
                             <tr>
                                 <th>Uživatelské jméno:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getUsername()); ?>
-                                </td>
+                                <td><?php echo Escape::html($user->getUsername()); ?></td>
                             </tr>
                             <tr>
                                 <th>Jméno:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getName()); ?>
-                                </td>
+                                <td><?php echo Escape::html($user->getName()); ?></td>
                             </tr>
-                            <tr>
-                                <?php if ($user->hasPhone()): ?>
-                                <th>Telefon:</th>
-                                <td>
-                                    <?php echo Escape::html($user->getPhone()); ?>
-                                </td>
-                            </tr>
+                            <?php if ($user->hasPhone()): ?>
+                                <tr>
+                                    <th>Telefon:</th>
+                                    <td><?php echo Escape::html($user->getPhone()); ?></td>
+                                </tr>
                             <?php endif; ?>
                             <?php if ($user->hasEmail()): ?>
                                 <tr>
                                     <th>Email:</th>
-                                    <td>
-                                        <?php echo Escape::html($user->getEmail()); ?>
-                                    </td>
+                                    <td><?php echo Escape::html($user->getEmail()); ?></td>
                                 </tr>
                             <?php endif; ?>
                         </table>
+
                     </div>
                 </div>
-            <?php else: ?>
+
+            <?php } else { ?>
+
                 <h3>Registrace uživatele</h3>
-                <?php if ($error !== null): ?>
+
+                <?php if ($error !== null) { ?>
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <?php echo $error; ?>
                     </div>
-                <?php endif; ?>
+                <?php } ?>
 
                 <form action="" method="post">
-                    <div class="form-group">
-                        <label for="name">Jméno *</label>
-                        <input type="text" class="form-control" name="name" id="name"
-                               value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
+                    <div class="form-group"><label for="name">Jméno *</label>
+                        <input type="text" class="form-control" name="name" id="name" value="<?php echo Escape::html(Helpers::getFormValue('name')); ?>" autocomplete="name">
                     </div>
-                    <div class="form-group">
-                        <label for="username">Uživatelské jméno *</label>
-                        <input type="text" class="form-control" name="username" id="username"
-                               value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
+                    <div class="form-group"><label for="username">Uživatelské jméno *</label>
+                        <input type="text" class="form-control" name="username" id="username" value="<?php echo Escape::html(Helpers::getFormValue('username')); ?>" autocomplete="username">
                     </div>
-                    <div class="form-group">
-                        <label for="password">Heslo *</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                    <div class="form-group"><label for="password">Heslo *</label>
+                        <input type="password" class="form-control" name="password" id="password"></div>
+                    <div class="form-group"><label for="phone">Telefon</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="<?php echo Escape::html(Helpers::getFormValue('phone')); ?>" autocomplete="tel-national">
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Telefon</label>
-                        <input type="text" class="form-control" name="phone" id="phone"
-                               value="<?php echo Escape::html(Helpers::getFormValue('phone')); ?>" autocomplete="tel-national">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="text" class="form-control" name="email" id="email"
-                               value="<?php echo Escape::html(Helpers::getFormValue('email')); ?>" autocomplete="email">
+                    <div class="form-group"><label for="email">E-mail</label>
+                        <input type="text" class="form-control" name="email" id="email" value="<?php echo Escape::html(Helpers::getFormValue('email')); ?>" autocomplete="email">
                     </div>
                     <input type="hidden" name="action" value="registration-form">
                     <input type="submit" name="submit" value="Registrovat se" class="btn btn-primary">
                 </form>
-            <?php endif; ?>
-        <?php endif; ?>
+
+            <?php } ?>
+        <?php } ?>
 
         <?php if ($pageNum == '404') {
             http_response_code(404);
@@ -227,6 +225,7 @@ if ($pageAddress == "/www/index.php/add") {
         <?php if ($pageNum == 'welcome') { ?>
             <p>Nějaký pěkný popis téhle aplikace který může obsahovat třeba návod na ovládání nebo jiné užitečné rady.</p>
         <?php } ?>
+
     </div>
 </div>
 </body>
