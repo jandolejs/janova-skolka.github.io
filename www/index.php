@@ -97,17 +97,17 @@ if ($pageAddress == "/www/index.php/add") {
     <nav class="navbar navbar-default">
         <div class="navButtons">
 
-            <a class="navbar-brand"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+            <a class="navbar-brand"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
             <ul class="nav navbar-nav">
                 <li class="<?php if ($pageNum == "welcome") {
                     echo 'active';
-                } ?>"><a href="/www">úvodní stránka</a></li>
+                } ?>"><a href="/www"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Úvodní stránka</a></li>
                 <li class="<?php if ($pageNum == "add") {
                     echo 'active';
-                } ?>"><a href="/www/add">Registrace uživatele</a></li>
+                } ?>"><a href="/www/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrace uživatele</a></li>
                 <li class="<?php if ($pageNum == "show") {
                     echo 'active';
-                } ?>"><a href="/www/show">Seznam uživatelů</a></li>
+                } ?>"><a href="/www/show"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Seznam uživatelů</a></li>
             </ul>
         </div>
     </nav>
