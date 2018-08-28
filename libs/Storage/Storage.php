@@ -16,34 +16,13 @@ class Storage
         $this->path = $path;
     }
 
-    public function findKeys()
-    {
-
-        $data = [];
-        $files = scandir($this->path);
-
-        foreach ($files as $file) {
-            if (preg_match('/^\d{4}(-\d\d){5}-.+\.json$/', $file)) {
-                $data[] = $file;
-            }
-        }
-
-        return $data;
-    }
-
-    public function getByKey($key)
-    {
-
-        $content = file_get_contents($this->path . "/" . $key);
-        $data = Json::decode($content, Json::FORCE_ARRAY);
-        return $data;
-    }
-
-    public function save($name, $data)
+    public function save($name, $data, $filePath = null)
     {
         $dataToWrite = Json::encode($data, Json::PRETTY);
 
-        $filePath = $this->getNewFilePath($name);
+        if (!isset($filePath)) {
+            $filePath = $this->getNewFilePath($name);
+        }
 
         $isFileSaved = @file_put_contents($filePath, $dataToWrite);
 
@@ -68,5 +47,39 @@ class Storage
         $name = Strings::webalize($name);
         $name = Strings::truncate($name, '30', '');
         return $name;
+    }
+
+    public function changeInfo($key, $fieldName, $newValue)
+    {
+
+        $file = $this->getByKey($key);
+
+        $file[$fieldName] = $newValue;
+
+        $filePath = $this->path . '/' . $key;
+        $this->save('aby se nereklo', $file, $filePath);
+    }
+
+    public function findKeys()
+    {
+
+        $data = [];
+        $files = scandir($this->path);
+
+        foreach ($files as $file) {
+            if (preg_match('/^\d{4}(-\d\d){5}-.+\.json$/', $file)) {
+                $data[] = $file;
+            }
+        }
+
+        return $data;
+    }
+
+    public function getByKey($key)
+    {
+
+        $content = file_get_contents($this->path . "/" . $key);
+        $data = Json::decode($content, Json::FORCE_ARRAY);
+        return $data;
     }
 }

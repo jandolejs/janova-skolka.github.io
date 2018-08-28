@@ -40,7 +40,8 @@ class Validate
 
             $data = $storage->getByKey($name);
 
-            if ($value == $data['username']) {
+            global $checkExistence;
+            if ($value == $data['username'] && $checkExistence) {
                 throw new ValidateException('Uživatelské jméno již existuje');
             }
         }

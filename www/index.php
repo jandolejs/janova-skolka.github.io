@@ -19,6 +19,7 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 
 // ===== Inicializace ===========================
 
+$checkExistence = true;
 $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
@@ -28,6 +29,7 @@ $users = $storage->findKeys();
 // ===== Aplikace ===============================
 
 if (Helpers::isFormSent('registration-form')) {
+    $checkExistence = true;
     try {
 
         $user = new User(
@@ -42,7 +44,7 @@ if (Helpers::isFormSent('registration-form')) {
 
         if (Helpers::isFilled(Helpers::getFormValue('email'))) {
             $user->setEmail(new Content\Email(Helpers::getFormValue('email')));
-            Mail\Mailer::sendMail($user->toArray());
+            //Mail\Mailer::sendMail($user->toArray());
         }
 
         $storage->save($user->getName(), $user->toArray(User::WITH_PASSWORD));
@@ -69,7 +71,11 @@ if ($pageAddress == "/www/index.php/add") {
         if ($pageAddress == "/www/index.php") {
             $pageNum = 'welcome';
         } else {
-            $pageNum = '404';
+            if (preg_match('/change\/.*/i', $pageAddress) || preg_match('/change$/i', $pageAddress)) {
+                $pageNum = 'change';
+            } else {
+                $pageNum = '404';
+            }
         }
     }
 }
@@ -133,6 +139,7 @@ if ($pageAddress == "/www/index.php/add") {
                     $data = $storage->getByKey($user);
 
                     echo '<tr>';
+                    echo '<td>' . '<a href="' . '/www/change/' . $data['username'] . '">Upravit</a>';
                     echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
                     echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
                     echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
@@ -224,6 +231,141 @@ if ($pageAddress == "/www/index.php/add") {
 
         <?php if ($pageNum == 'welcome') { ?>
             <p>Nějaký pěkný popis téhle aplikace který může obsahovat třeba návod na ovládání nebo jiné užitečné rady.</p>
+        <?php } ?>
+
+        <?php if ($pageNum == 'change') { ?>
+
+            <?php
+            $username = preg_replace('/.*?change\//i', "", $pageAddress);
+            $testUser = null;
+            $e = null;
+
+            foreach ($users as $user) {
+                $data = $storage->getByKey($user);
+                if ($data['username'] == $username) {
+                    $changing = $user;
+                }
+            }
+            $data = $storage->getByKey($changing);
+
+            if (Helpers::isFormSent('changing-form')) {
+
+                try {
+
+                    $checkExistence = false;
+                    $testUser = new User(
+                        new Content\Username(Helpers::getFormValue('username')),
+                        new Content\Password('aby se nereklo :)'),
+                        new Content\Name(Helpers::getFormValue('name'))
+                    );
+
+                    if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
+                        $testUser->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
+                        if (!$testUser->getPhone()) {
+                            $e = 'Telefon musí obsahovat právě 9 číslic, prosím opravte jej';
+                        }
+                    }
+
+                    if (Helpers::isFilled(Helpers::getFormValue('email'))) {
+                        $testUser->setEmail(new Content\Email(Helpers::getFormValue('email')));
+                        if (!$testUser->getEmail()) {
+                            $e = 'Zadali jste neplatný e-mail, prosím zkontrolujte zadání a opravte jej.';
+                        }
+                    }
+                } catch (ValidateException $e) {
+                    $error = $e->getMessage();
+                    bdump('error: ' . $e);
+                } catch (\Exception $e) {
+                    bdump('error: ' . $e);
+                    Debugger::log($e, ILogger::ERROR);
+                    $error = 'Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz';
+                }
+
+                if ($testUser instanceof User && $e === null) {
+
+                    $storage->changeInfo($changing, 'name', Helpers::getFormValue('name'));
+                    $storage->changeInfo($changing, 'username', Helpers::getFormValue('username'));
+                    $storage->changeInfo($changing, 'phone', Helpers::getFormValue('phone'));
+                    $storage->changeInfo($changing, 'email', Helpers::getFormValue('email'));
+                    ?>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="alert alert-success" role="alert">
+                                Položky úspěšně upraveny.
+                                <a class="btn btn-success" style="margin-left: 2%;" href="/www/show"> Zobrazit seznam uživatelů</a>
+                            </div>
+
+                            <h3>Data z formuláře</h3>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Uživatelské jméno:</th>
+                                    <td><?php echo Escape::html($testUser->getUsername()); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Jméno:</th>
+                                    <td><?php echo Escape::html($testUser->getName()); ?></td>
+                                </tr>
+                                <?php if ($testUser->hasPhone()) { ?>
+                                    <tr>
+                                        <th>Telefon:</th>
+                                        <td><?php echo Escape::html($testUser->getPhone()); ?></td>
+                                    </tr>
+                                <?php } ?>
+                                <?php if ($testUser->hasEmail()) { ?>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td><?php echo Escape::html($testUser->getEmail()); ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+
+                        </div>
+                    </div>
+                <?php } else { ?>
+
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign"></span>
+                        Upravujete údaje
+                    </div>
+
+                    <?php if ($error !== null) { ?>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <?php echo $error; ?>
+                        </div>
+                    <?php } ?>
+                    <?php
+                }
+
+                $data['name'] = Helpers::getFormValue('name');
+                $data['username'] = Helpers::getFormValue('username');
+                $data['phone'] = Helpers::getFormValue('phone');
+                $data['email'] = Helpers::getFormValue('email');
+            }
+            if (!$testUser instanceof User || $e) {
+                bdump('testuser instanceof User: FALSE OR error');
+                ?>
+                <form action="" method="post">
+                    <div class="form-group"><label for="name">Jméno *</label>
+                        <input type="text" class="form-control" name="name" id="name" value="<?php echo(isset($data['name']) ? $data['name'] : ""); ?>" autocomplete="name">
+                    </div>
+                    <div class="form-group"><label for="username">Uživatelské jméno *</label>
+                        <input type="hidden" class="form-control" name="username" id="username" value="<?php echo(isset($data['username']) ? $data['username'] : ""); ?>" autocomplete="username">
+                        <input type="text" class="form-control" name="usernamex" id="usernamex" placeholder="<?php echo(isset($data['username']) ? $data['username'] : ""); ?>" autocomplete="username" disabled>
+                    </div>
+                    <div class="form-group"><label for="phone">Telefon</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="<?php echo(isset($data['phone']) ? $data['phone'] : ""); ?>" autocomplete="tel-national">
+                    </div>
+                    <div class="form-group"><label for="email">E-mail</label>
+                        <input type="text" class="form-control" name="email" id="email" value="<?php echo(isset($data['email']) ? $data['email'] : ""); ?>" autocomplete="email">
+                    </div>
+                    <input type="hidden" name="action" value="changing-form">
+                    <input type="submit" name="submit" value="Potvrdit změny" class="btn btn-primary">
+                </form>
+            <?php } ?>
         <?php } ?>
 
     </div>
