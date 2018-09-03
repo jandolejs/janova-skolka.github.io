@@ -280,10 +280,13 @@ switch ($pageAddress) {
 
                 if ($testUser instanceof User && $e === null) {
 
-                    $storage->changeInfo($changing, 'name', Helpers::getFormValue('name'));
-                    $storage->changeInfo($changing, 'username', Helpers::getFormValue('username'));
-                    $storage->changeInfo($changing, 'phone', Helpers::getFormValue('phone'));
-                    $storage->changeInfo($changing, 'email', Helpers::getFormValue('email'));
+                    $values = [];
+                    $values['name'] = Helpers::getFormValue('name');
+                    $values['username'] = Helpers::getFormValue('username');
+                    $values['phone'] = Helpers::getFormValue('phone');
+                    $values['email'] = Helpers::getFormValue('email');
+                    $storage->changeInfo($changing, $values);
+
                     ?>
 
                     <div class="row">

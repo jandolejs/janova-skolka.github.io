@@ -49,12 +49,15 @@ class Storage
         return $name;
     }
 
-    public function changeInfo($key, $fieldName, $newValue)
+    public function changeInfo($key, $values)
     {
 
         $file = $this->getByKey($key);
 
-        $file[$fieldName] = $newValue;
+        $file['name'] = $values['name'];
+        $file['username'] = $values['username'];
+        $file['phone'] = $values['phone'];
+        $file['email'] = $values['email'];
 
         $filePath = $this->path . '/' . $key;
         $this->save('aby se nereklo', $file, $filePath);
