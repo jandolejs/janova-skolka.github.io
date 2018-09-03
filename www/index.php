@@ -278,7 +278,7 @@ switch ($pageAddress) {
                         $error = 'Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz';
                     }
 
-                    if ($testUser instanceof User && $e === null) {
+                    if ($e === null) {
 
                         $values = [];
                         $values['name'] = Helpers::getFormValue('name');
