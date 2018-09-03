@@ -24,7 +24,6 @@ $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
 
-$users = $storage->findKeys();
 
 // ===== Aplikace ===============================
 
@@ -129,11 +128,11 @@ switch ($pageAddress) {
 
             echo '<h2>Uživatelé</h2>';
 
-            if ($users) {
+            if ($storage->findKeys()) {
 
                 echo '<table class="table table-bordered table-hover">';
 
-                foreach ($users as $user) {
+                foreach ($storage->findKeys() as $user) {
 
                     $data = $storage->getByKey($user);
 
@@ -239,7 +238,7 @@ switch ($pageAddress) {
             $testUser = null;
             $e = null;
 
-            foreach ($users as $user) {
+            foreach ($storage->findKeys() as $user) {
                 $data = $storage->getByKey($user);
                 if ($data['username'] == $username) {
                     $changing = $user;
