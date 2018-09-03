@@ -264,16 +264,10 @@ switch ($pageAddress) {
 
                     if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
                         $testUser->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
-                        if (!$testUser->getPhone()) {
-                            $e = 'Telefon musí obsahovat právě 9 číslic, prosím opravte jej';
-                        }
                     }
 
                     if (Helpers::isFilled(Helpers::getFormValue('email'))) {
                         $testUser->setEmail(new Content\Email(Helpers::getFormValue('email')));
-                        if (!$testUser->getEmail()) {
-                            $e = 'Zadali jste neplatný e-mail, prosím zkontrolujte zadání a opravte jej.';
-                        }
                     }
                 } catch (ValidateException $e) {
                     $error = $e->getMessage();
