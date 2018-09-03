@@ -20,6 +20,11 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 
 // ===== Inicializace ===========================
 
+// $basePath - prefix URL, který musí být, aby aplikace fungovala, ale není součástí URL aplikace
+$basePath = rtrim(\dirname($_SERVER['SCRIPT_NAME']),'/');
+// $requestPath - požadovaná URL v rámci aplikace
+$requestPath = substr($_SERVER['REQUEST_URI'], \strlen($basePath));
+
 $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
@@ -61,19 +66,18 @@ if (Helpers::isFormSent('registration-form')) {
 }
 
 $pageNum = "404";
-$pageAddress = $_SERVER['PHP_SELF'];
 
-switch ($pageAddress) {
-    case "/www/index.php/add" :
+switch ($requestPath) {
+    case "/add" :
         $pageNum = 'add';
         break;
-    case "/www/index.php/show" :
+    case "/show" :
         $pageNum = 'show';
     break;
-    case "/www/index.php" :
+    case "/" :
         $pageNum = 'welcome';
     break;
-    case preg_match('/change\/.*/i', $pageAddress) || preg_match('/change$/i', $pageAddress) :
+    case preg_match('/change\/.*/i', $requestPath) || preg_match('/change$/i', $requestPath) :
         $pageNum = 'change';
     break;
 
@@ -109,13 +113,13 @@ switch ($pageAddress) {
 
             <ul class="nav navbar-nav">
                 <li class="<?= ($pageNum == 'welcome') ? 'active' : ''; ?>">
-                    <a href="/www"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Úvodní stránka</a>
+                    <a href="<?= $basePath; ?>/"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Úvodní stránka</a>
                 </li>
                 <li class="<?= ($pageNum == 'add') ? 'active' : ''; ?>">
-                    <a href="/www/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrace uživatele</a>
+                    <a href="<?= $basePath; ?>/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrace uživatele</a>
                 </li>
                 <li class="<?= ($pageNum == 'show') ? 'active' : ''; ?>">
-                    <a href="/www/show"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Seznam uživatelů</a>
+                    <a href="<?= $basePath; ?>/show"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Seznam uživatelů</a>
                 </li>
             </ul>
         </div>
@@ -141,7 +145,7 @@ switch ($pageAddress) {
 
                     echo '<td>';
                     if (isset($data['username'])) {
-                        echo '<a href="' . '/www/change/' . $data['username'] . '">Upravit</a>';
+                        echo '<a href="' . $basePath . '/change/' . $data['username'] . '">Upravit</a>';
                     }
 
                     echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
@@ -164,7 +168,7 @@ switch ($pageAddress) {
 
                         <div class="alert alert-success" role="alert">
                             Registrace byla úspěšně dokončena.
-                            <a class="btn btn-success" style="margin-left: 2%;" href="/www/add"> Registrace dalšího uživatele</a>
+                            <a class="btn btn-success" style="margin-left: 2%;" href="<?= $basePath; ?>/add"> Registrace dalšího uživatele</a>
                         </div>
 
                         <h3>Data z formuláře</h3>
@@ -240,7 +244,7 @@ switch ($pageAddress) {
         <?php if ($pageNum == 'change') { ?>
 
             <?php
-            $username = preg_replace('/.*?change\//i', "", $pageAddress);
+            $username = preg_replace('/.*?change\//i', "", $requestPath);
             $changing = null;
             $testUser = null;
             $e = null;
@@ -294,7 +298,7 @@ switch ($pageAddress) {
 
                                 <div class="alert alert-success" role="alert">
                                     Položky úspěšně upraveny.
-                                    <a class="btn btn-success" style="margin-left: 2%;" href="/www/show"> Zobrazit seznam uživatelů</a>
+                                    <a class="btn btn-success" style="margin-left: 2%;" href="<?= $basePath; ?>/show"> Zobrazit seznam uživatelů</a>
                                 </div>
 
                                 <h3>Data z formuláře</h3>
@@ -369,7 +373,7 @@ switch ($pageAddress) {
                 <div class="alert alert-warning" role="alert">
                     <span class="glyphicon glyphicon-warning-sign"></span>
                     Uživatel neexistuje
-                    <a class="btn btn-primary" style="margin-left: 2%;" href="/www/show"> Zobrazit seznam uživatelů</a>
+                    <a class="btn btn-primary" style="margin-left: 2%;" href="<?= $basePath; ?>/show"> Zobrazit seznam uživatelů</a>
                 </div>
             <?php }?>
         <?php } ?>

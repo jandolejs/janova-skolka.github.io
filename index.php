@@ -15,7 +15,7 @@
     <p><a href="https://github.com/janova-skolka/janova-skolka.github.io/">GitHub</a></p>
     <h3>Lekce PHP</h3>
     <p>
-        <a href="./www" class="btn btn-primary btn-lg">Spustit aplikaci »</a>
+        <a href="./www/" class="btn btn-primary btn-lg">Spustit aplikaci »</a>
     </p>
 
     <h3>Tip</h3>
