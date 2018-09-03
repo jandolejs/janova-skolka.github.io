@@ -46,7 +46,6 @@ class Validate
         foreach ($users as $name) {
             $data = $storage->getByKey($name);
             if ($value == $data['username']) {
-                bdump('vyjímka');
                 throw new ValidateException('Uživatelské jméno již existuje');
             }
         }
