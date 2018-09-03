@@ -108,15 +108,15 @@ switch ($pageAddress) {
             </a>
 
             <ul class="nav navbar-nav">
-                <li class="<?php if ($pageNum == "welcome") {
-                    echo 'active';
-                } ?>"><a href="/www"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Úvodní stránka</a></li>
-                <li class="<?php if ($pageNum == "add") {
-                    echo 'active';
-                } ?>"><a href="/www/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrace uživatele</a></li>
-                <li class="<?php if ($pageNum == "show") {
-                    echo 'active';
-                } ?>"><a href="/www/show"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Seznam uživatelů</a></li>
+                <li class="<?= ($pageNum == 'welcome') ? 'active' : ''; ?>">
+                    <a href="/www"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Úvodní stránka</a>
+                </li>
+                <li class="<?= ($pageNum == 'add') ? 'active' : ''; ?>">
+                    <a href="/www/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrace uživatele</a>
+                </li>
+                <li class="<?= ($pageNum == 'show') ? 'active' : ''; ?>">
+                    <a href="/www/show"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Seznam uživatelů</a>
+                </li>
             </ul>
         </div>
     </nav>
