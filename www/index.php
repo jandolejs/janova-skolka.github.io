@@ -4,6 +4,7 @@ namespace App;
 
 use App\Content;
 use App\Storage\Storage;
+use App\Validator\Validate;
 use App\Validator\ValidateException;
 use Tracy\Debugger;
 use Tracy\ILogger;
@@ -19,7 +20,6 @@ Debugger::enable(Debugger::DETECT, __DIR__ . '/../log');
 
 // ===== Inicializace ===========================
 
-$checkExistence = true;
 $user = null;
 $error = null;
 $storage = new Storage(__DIR__ . '/../output');
@@ -28,7 +28,6 @@ $storage = new Storage(__DIR__ . '/../output');
 // ===== Aplikace ===============================
 
 if (Helpers::isFormSent('registration-form')) {
-    $checkExistence = true;
     try {
 
         $user = new User(
@@ -36,6 +35,8 @@ if (Helpers::isFormSent('registration-form')) {
             new Content\Password(Helpers::getFormValue('password')),
             new Content\Name(Helpers::getFormValue('name'))
         );
+
+        Validate::usernameExistence(Helpers::getFormValue('username'));
 
         if (Helpers::isFilled(Helpers::getFormValue('phone'))) {
             $user->setPhone(new Content\Phone(Helpers::getFormValue('phone')));
@@ -157,7 +158,7 @@ switch ($pageAddress) {
         } ?>
 
         <?php if ($pageNum == 'add') { ?>
-            <?php if ($user instanceof User) { ?>
+            <?php if ($user instanceof User && $e === null) { ?>
                 <div class="row">
                     <div class="col-sm-12">
 
@@ -257,7 +258,6 @@ switch ($pageAddress) {
 
                     try {
 
-                        $checkExistence = false;
                         $testUser = new User(
                             new Content\Username(Helpers::getFormValue('username')),
                             new Content\Password('aby se nereklo :)'),

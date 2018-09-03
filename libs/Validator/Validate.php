@@ -34,19 +34,22 @@ class Validate
             throw new ValidateException('Přihlašovací jméno smí obsahovat jen latinská písmena bez diakritiky, čísla a tečky');
         }
 
+        return $isValid;
+    }
+
+    static function usernameExistence($value)
+    {
+
         $storage = new Storage(__DIR__ . '/../../output');
         $users = $storage->findKeys();
+
         foreach ($users as $name) {
-
             $data = $storage->getByKey($name);
-
-            global $checkExistence;
-            if ($value == $data['username'] && $checkExistence) {
+            if ($value == $data['username']) {
+                bdump('vyjímka');
                 throw new ValidateException('Uživatelské jméno již existuje');
             }
         }
-
-        return $isValid;
     }
 
 
