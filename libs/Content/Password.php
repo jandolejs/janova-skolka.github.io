@@ -7,11 +7,18 @@ use App\Validator\Validate;
 class Password extends DataObject
 {
 
-    public function __construct($content)
+    public function __construct($content, bool $alreadyHash = false)
     {
+        // Bypass validation when already hash
+        $this->checkValidity = !$alreadyHash;
         parent::__construct($content);
-        $this->content = password_hash($content, PASSWORD_BCRYPT);
+
+        // Don't hash if already hash
+        if (!$alreadyHash) {
+            $this->content = password_hash($content, PASSWORD_BCRYPT);
+        }
     }
+
 
     protected function validate($content)
     {
