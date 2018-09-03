@@ -60,7 +60,7 @@ if (Helpers::isFormSent('registration-form')) {
     }
 }
 
-$pageNum = null;
+$pageNum = "404";
 $pageAddress = $_SERVER['PHP_SELF'];
 if ($pageAddress == "/www/index.php/add") {
     $pageNum = 'add';
@@ -274,9 +274,7 @@ if ($pageAddress == "/www/index.php/add") {
                     }
                 } catch (ValidateException $e) {
                     $error = $e->getMessage();
-                    bdump('error: ' . $e);
                 } catch (\Exception $e) {
-                    bdump('error: ' . $e);
                     Debugger::log($e, ILogger::ERROR);
                     $error = 'Omlouváme se, něco se pokazilo, zkuste to znovu později nebo nás kontaktujte na support@service.cz';
                 }
@@ -346,7 +344,6 @@ if ($pageAddress == "/www/index.php/add") {
                 $data['email'] = Helpers::getFormValue('email');
             }
             if (!$testUser instanceof User || $e) {
-                bdump('testuser instanceof User: FALSE OR error');
                 ?>
                 <form action="" method="post">
                     <div class="form-group"><label for="name">Jméno *</label>
