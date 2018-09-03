@@ -82,6 +82,7 @@ class Storage
     {
 
         $content = file_get_contents($this->path . "/" . $key);
+        $data = null;
         if ($content) {
             $data = Json::decode($content, Json::FORCE_ARRAY);
         }

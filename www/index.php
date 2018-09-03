@@ -240,15 +240,17 @@ switch ($pageAddress) {
 
             <?php
             $username = preg_replace('/.*?change\//i', "", $pageAddress);
+            $changing = null;
             $testUser = null;
             $e = null;
 
             foreach ($storage->findKeys() as $user) {
                 $data = $storage->getByKey($user);
-                if ($data['username'] == $username) {
+                if (isset($data['username']) && $data['username'] == $username) {
                     $changing = $user;
                 }
             }
+
             $data = $storage->getByKey($changing);
             if ($data !== null) {
                 if (Helpers::isFormSent('changing-form')) {
