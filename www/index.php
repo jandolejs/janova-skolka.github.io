@@ -62,22 +62,21 @@ if (Helpers::isFormSent('registration-form')) {
 
 $pageNum = "404";
 $pageAddress = $_SERVER['PHP_SELF'];
-if ($pageAddress == "/www/index.php/add") {
-    $pageNum = 'add';
-} else {
-    if ($pageAddress == "/www/index.php/show") {
+
+switch ($pageAddress) {
+    case "/www/index.php/add" :
+        $pageNum = 'add';
+        break;
+    case "/www/index.php/show" :
         $pageNum = 'show';
-    } else {
-        if ($pageAddress == "/www/index.php") {
-            $pageNum = 'welcome';
-        } else {
-            if (preg_match('/change\/.*/i', $pageAddress) || preg_match('/change$/i', $pageAddress)) {
-                $pageNum = 'change';
-            } else {
-                $pageNum = '404';
-            }
-        }
-    }
+    break;
+    case "/www/index.php" :
+        $pageNum = 'welcome';
+    break;
+    case preg_match('/change\/.*/i', $pageAddress) || preg_match('/change$/i', $pageAddress) :
+        $pageNum = 'change';
+    break;
+
 }
 
 ?>
