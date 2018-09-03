@@ -137,7 +137,12 @@ switch ($pageAddress) {
                     $data = $storage->getByKey($user);
 
                     echo '<tr>';
-                    echo '<td>' . '<a href="' . '/www/change/' . $data['username'] . '">Upravit</a>';
+
+                    echo '<td>';
+                    if (isset($data['username'])) {
+                        echo '<a href="' . '/www/change/' . $data['username'] . '">Upravit</a>';
+                    }
+
                     echo '<td>' . (isset($data['name']) ? $data['name'] : "-") . '</td>';
                     echo '<td>' . (isset($data['username']) ? $data['username'] : "-") . '</td>';
                     echo '<td>' . (isset($data['phone']) ? $data['phone'] : "-") . '</td>';
