@@ -4,12 +4,15 @@ namespace App\Content;
 
 abstract class DataObject
 {
+    protected $checkValidity = true;
     protected $content;
 
 
     public function __construct($content)
     {
-        $this->validate($content);
+        if ($this->checkValidity) {
+            $this->validate($content);
+        }
         $this->content = $content;
     }
 
