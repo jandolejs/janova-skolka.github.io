@@ -20,6 +20,12 @@ class Password extends DataObject
     }
 
 
+    public static function fromHash(string $hash)
+    {
+        return new self($hash, true);
+    }
+
+
     protected function validate($content)
     {
         Validate::required($content) && Validate::password($content);
